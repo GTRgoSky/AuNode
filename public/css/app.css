@@ -1,0 +1,267 @@
+/*
+ * 国内游各个后台系统，统一一个业务CSS，命名为app.css
+ * 请大家注意完善注释
+ */
+/*
+ * 覆盖inspinia原始样式
+ */
+body.mini-navbar .navbar-default .nav > li > a {
+    white-space: nowrap;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    font-size: inherit!important;
+    padding-left: 20px;
+}
+.pagination {
+    margin: 0;
+}
+/*重写*/
+
+/*工具类*/
+.nowrap {
+    white-space: nowrap;
+}
+.td-middle td {
+    vertical-align: middle!important;
+}
+.red {
+    color: red;
+}
+.ellipsis {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.fs-20 {
+    font-size: 20px;
+}
+.fs-22 {
+    font-size: 22px;
+}
+/*只读输入框边框*/
+input.readonly {
+    border: 1px solid #ccc;
+}
+/*无效的列表项*/
+tr.invalid {
+    color: #ccc;
+}
+tr.invalid td.td-index {
+    color: #676A6C;
+}
+tr.invalid td.task-name {
+    text-decoration: line-through;
+}
+/*加载进度条(圈圈样式)*/
+.progress-circle-parent {
+    position: relative;
+}
+.progress-circle-showEle {
+    display: none;
+}
+.progress-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -20px;
+    margin-top: -20px;
+    transform: scale(2);
+    -ms-transform: scale(2);
+    /* IE 9 */
+    -moz-transform: scale(2);
+    /* Firefox */
+    -webkit-transform: scale(2);
+    /* Safari 和 Chrome */
+    -o-transform: scale(2);
+}
+.input-daterange .input-group-addon {
+    padding: 0 2px;
+}
+.input-daterange .btn {
+    padding: 5px;
+}
+/* 百分比progress样式重写 */
+.progress {
+    background-color: #ddd;
+    width: 100%;
+    margin-bottom: 0;
+    margin-top: 5px;
+}
+/* 表格中类似标题的长本文宽度限制 */
+table .title-txt {
+    max-width: 130px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/*
+ * 覆盖checkbox、radio原始样式
+ * checkbox、radio样式重写
+ */
+@font-face {
+    font-family: 'FontAwesome';
+    src: url('../lib/font-awesome/4.4.0/fonts/fontawesome-webfont.eot?v=4.4.0');
+    src: url('../lib/font-awesome/4.4.0/fonts/fontawesome-webfont.eot?#iefix&v=4.4.0') format('embedded-opentype'), url('../lib/font-awesome/4.4.0/fonts/fontawesome-webfont.woff2?v=4.4.0') format('woff2'), url('../lib/font-awesome/4.4.0/fonts/fontawesome-webfont.woff?v=4.4.0') format('woff'), url('../lib/font-awesome/4.4.0/fonts/fontawesome-webfont.ttf?v=4.4.0') format('truetype'), url('../lib/font-awesome/4.4.0/fonts/fontawesome-webfont.svg?v=4.4.0#fontawesomeregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.radio-checkbox-inline {
+    padding: 0px;
+    white-space: nowrap;
+    line-height: 20px;
+}
+.radio-checkbox-inline,
+.radio-checkbox-inline * {
+    cursor: pointer;
+}
+.radio-checkbox-inline + .radio-checkbox-inline {
+    margin: 0px;
+}
+.radio-checkbox-inline label {
+    margin: 0px;
+    padding-right: 20px;
+    font-weight: normal;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.radio-checkbox-inline label:before {
+    content: "";
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ccc;
+    display: inline-block;
+    vertical-align: -10%;
+}
+.radio-checkbox-inline label:hover:before {
+    border: 2px solid #2C8F7B;
+}
+.radio-inline,
+.checkbox-inline {
+    padding: 0px;
+    white-space: nowrap;
+    line-height: 20px;
+}
+.radio-inline,
+.checkbox-inline,
+.radio-inline *,
+.checkbox-inline * {
+    cursor: pointer;
+}
+.radio-inline + .radio-inline,
+.radio-inline + .checkbox-inline,
+.checkbox-inline + .radio-inline,
+.checkbox-inline + .checkbox-inline {
+    margin: 0px;
+}
+.radio-inline label,
+.checkbox-inline label {
+    margin: 0px;
+    padding-right: 20px;
+    font-weight: normal;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.radio-inline label:before,
+.checkbox-inline label:before {
+    content: "";
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ccc;
+    display: inline-block;
+    vertical-align: -10%;
+}
+.radio-inline label:hover:before,
+.checkbox-inline label:hover:before {
+    border: 2px solid #2C8F7B;
+}
+.radio-inline input[type=radio],
+.checkbox-inline input[type=radio],
+.radio-inline input[type=checkbox],
+.checkbox-inline input[type=checkbox] {
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    margin: 0;
+}
+.radio-inline input[type=radio]:checked + label:before,
+.checkbox-inline input[type=radio]:checked + label:before,
+.radio-inline input[type=checkbox]:checked + label:before,
+.checkbox-inline input[type=checkbox]:checked + label:before {
+    font: normal normal normal 14px/1 FontAwesome;
+    content: '\f00c';
+    border: 2px solid #2C8F7B;
+    color: #fff;
+    background: #2C8F7B;
+    text-align: center;
+    vertical-align: 20%;
+}
+.radio-inline input[type=radio]:disabled + label:before,
+.checkbox-inline input[type=radio]:disabled + label:before,
+.radio-inline input[type=checkbox]:disabled + label:before,
+.checkbox-inline input[type=checkbox]:disabled + label:before {
+    border: 2px solid #ccc;
+    background: #ccc;
+}
+.radio-inline label:before {
+    border-radius: 10px;
+}
+.checkbox-inline label:before {
+    border-radius: 0px;
+}
+.edui-container-fullscreen {
+    width: auto!important;
+    height: auto!important;
+    top: 80px!important;
+    left: 110px!important;
+    right: 20px!important;
+    bottom: 40px!important;
+}
+.edui-container-fullscreen .edui-body-container {
+    width: 100%!important;
+    max-height: 100%!important;
+}
+.edui-body-container {
+    table-layout: fixed;
+    word-break: break-all;
+    overflow-x: hidden;
+}
+.edui-content-textarea {
+    display: block!important;
+    width: 1px!important;
+    height: 1px!important;
+    min-height: 1px!important;
+    opacity: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+/* 图片宽度限制 */
+img {
+    max-width: 100%;
+}
+.half-width {
+    width: 49%;
+}
+.one-third-width {
+    width: 33%;
+}
+/*进度条动画*/
+.progress-bar-show-ele {
+    height: 0!important;
+    overflow: hidden!important;
+    padding: 0!important;
+    border: 0!important;
+}
+/* 重写H+页面框架 */
+body {
+    /*overflow: hidden;*/
+    background-color: #eee;
+}
+
+.frame{
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto 0;
+    padding: 0 10px;
+}
