@@ -1,0 +1,116 @@
+<!--插件-->
+<% block('plug').append('select2') %>
+<!--页面引用样式-->
+<% block('PageCSS').append('<style>\
+/* 重写icheck */\
+.radio-inline{\
+    min-width:130px;\
+}\
+.checkbox-inline{\
+    margin-bottom: 5px!important;\
+    min-width:190px;\
+}\
+.radio-inline, .checkbox-inline{\
+    padding-top: 0!important;\
+}\
+</style>') %>
+
+<% JSON.stringify($data) %>
+
+<div class="ibox J-Edit">
+    <div class="ibox-title">
+        <h5><i class="fa fa-edit"></i> 任务编辑页</h5>
+    </div>
+    <div class="ibox-content">
+        <form action="/Task/Edit" class="form-horizontal" method="post">
+            <% if($data.TMId){ %>
+                <input name="TMId" type="hidden" value="<%- $data.TMId -%>">
+            <% } %>
+            <div class="form-group">
+                <label class="col-lg-3 text-right"><span>任务名称</span> <span class="red">*</span></label>
+                <div class="col-lg-6">
+                    <input type="text" name="TMTitle" class="form-control" value="<%- $data.TMTitle -%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 text-right"><span>PM</span> <span class="red">*</span></label>
+                <div class="col-lg-6">
+                    <input type="text"  class="form-control" value="<%- PmName -%>" disabled>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="col-lg-3 text-right"><span>所属小组</span> <span class="red">*</span></label>
+                <div class="col-lg-8">
+                    <%- partial('shared/comp/check-radio', {
+                        data: {
+                            type: 'checkbox',
+                            name: 'TMTeam',
+                            obj: commonInfo.map.teamEntity,
+                            value: $data.TMTeam
+                        }
+                    }) -%>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 text-right"><span>优先级</span> <span class="red">*</span></label>
+                <div class="col-lg-6">
+                    <%- partial('shared/comp/check-radio', {
+                        data: {
+                            type: 'radio',
+                            name: 'TMRank',
+                            obj: commonInfo.map.Rank,
+                            value: $data.TMRank
+                        }
+                    }) -%>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 text-right"><span>完成进度</span> <span class="red">*</span></label>
+                <div class="col-lg-6">
+                    <select name="TMIsFinish" v-model='TMIsFinish'>
+                        <option value="未完成">未完成</option>
+                        <option value="进行中">进行中</option>
+                        <option value="已完成">已完成</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 text-right"><span>任务描述</span> <span class="red">*</span></label>
+                <div class="col-lg-6">
+                    <textarea name="TMDescription" class="form-control" rows="5"><%- $data.TMDescription -%></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-6 col-lg-offset-3">
+                    <!--<a href="javascript:;" class="btn btn-primary J-Sub"><i class="fa fa-save"></i> 保存</a>-->
+                    <%if(PmName == UserName || UserName=='root'){%>
+                        <button type="submit" class="btn btn-primary"  ><i class="fa fa-save"></i> 保存</button>
+                    <%}else{%>
+                        <button type="submit" class="btn btn-primary"  disabled><i class="fa fa-save"></i> 保存</button>
+                    <%}%>
+                    
+                </div>
+            </div>
+        </form>
+          <!--<div class="well">
+        {{$data |json}}
+    </div>-->
+    </div>
+</div>
+
+
+<script>
+setTimeout(function(){
+    new Vue({
+        el:".J-Edit",
+        data:{
+            TMIsFinish:'<%- $data.TMIsFinish%>',
+        }
+    })
+    
+},200)
+
+
+</script>

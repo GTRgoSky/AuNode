@@ -1,0 +1,90 @@
+<% layout(null) %>
+
+<div class="ibox-content" id="listTableVue">
+     
+    <table class="table">
+        <thead>
+            <!--<th nowrap>任务编号</th>-->
+            <th nowrap>任务ID / 名称</th>
+            <th nowrap>经办人</th>
+            <th nowrap>
+                <a href="javascript:;"
+                    class="J-SetOrder"
+                    data-field="TMTeam">
+                    <i class="fa fa-arrows-v"></i> 涉及小组</a>
+            </th>
+            <th nowrap>
+                <a href="javascript:;"
+                    class="J-SetOrder"
+                    data-field="TMCreateTime">
+                    <i class="fa fa-arrows-v"></i> 创建时间</a></th>
+            <th nowrap>
+                <a href="javascript:;"
+                    class="J-SetOrder"
+                    data-field="TMEditTime">
+                    <i class="fa fa-arrows-v"></i> 编辑时间</a></th>
+            <th nowrap>
+                <a href="javascript:;"
+                    class="J-SetOrder"
+                    data-field="TMRank">
+                    <i class="fa fa-arrows-v"></i> 任务等级</a></th>
+            <th nowrap>进度</th>
+            <% if($data.TMIsValid != 1){ %>
+                <th nowrap>
+                    <a href="javascript:;"
+                    class="J-SetOrder"
+                    data-field="TMDelTime">
+                    <i class="fa fa-arrows-v"></i> 删除时间</a></th>
+            <% } %>
+           
+            <th nowrap>操作</th>
+        </thead>
+        <tbody>
+            
+            <% for(var i = 0; i < $data.items.length; i++){
+                var item = $data.items[i];
+            %>
+                <tr>
+                    <!--<td><%- item._id -%></td>-->
+                    <td>
+                        <a href="/Task/detail?id=<%- item.TMId -%>"><%- item.TMId -%> / <%- item.TMTitle -%></a>
+                    </td>
+                    <td><%- item.TMDoUser -%></td>
+                    <td><%- item.TMTeamStr -%></td>
+                    <td><%- item.TMCreateTimeStr -%></td>
+                    <td><%- item.TMEditTimeStr -%></td>
+                    <td><%- item.TMRankStr -%></td>
+                    <td><%- item.TMIsFinish -%></td>
+                    <% if($data.TMIsValid == 1){ %>
+                    <td>
+                        <a href="/Task/Edit?id=<%- item.TMId -%>" v-show="<%= item.TMUserId==$data.IsUser || $data.IsUser ==1 %>" class="btn btn-primary btn-xs btn-outline J-Finish" data-id="<%- item.TMId -%>" data-title="<%- item.TMTitle -%>" data-valid="2">
+                            <i class="fa fa-trash-o"></i>修改
+                        </a>
+                        <a href="javascript:;" v-show="<%= item.TMUserId==$data.IsUser || $data.IsUser ==1 %>" class="btn btn-danger btn-xs btn-outline J-SetValid" data-id="<%- item.TMId -%>" data-title="<%- item.TMTitle -%>" data-valid="2">
+                            <i class="fa fa-trash-o"></i> 删除
+                        </a>
+                    </td>
+                    <% } else { %>
+                        <td><%- item.TMDelTimeStr -%></td>
+                        <td>
+                            <a href="javascript:;" v-show="<%= item.TMUserId==$data.IsUser || $data.IsUser ==1 %>" class="btn btn-success btn-xs btn-outline J-SetValid" data-id="<%- item.TMId -%>" data-title="<%- item.TMTitle -%>" data-valid="1"><i class="fa fa-reply"></i> 恢复</a>
+                        </td>
+                    <% } %>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</div>
+
+<div class="ibox-footer">
+    <div class="row">
+        <div class="col-md-5 col-sm-12">总计 <%- $data.counts -%> 条，每页显示 <%- $data.pageSize -%> 条</div>
+        <div class="col-md-7 col-sm-12 text-right J-Pagination"></div>
+    </div>
+</div>
+     
+<script>
+new Vue({
+        el: "#listTableVue",
+    })
+</script>

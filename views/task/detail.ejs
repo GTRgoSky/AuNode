@@ -1,0 +1,207 @@
+
+<!--插件-->
+<% block('plug').append('datetimepicker,select2') %>
+
+<!--页面引用样式-->
+<% block('PageCSS').append('<style>\
+/* 重写icheck */\
+.radio-inline{\
+    min-width:130px;\
+}\
+.checkbox-inline{\
+    margin-bottom: 5px!important;\
+    min-width:190px;\
+}\
+.radio-inline, .checkbox-inline{\
+    padding-top: 0!important;\
+}\
+</style>') %>
+
+<% JSON.stringify($data) %>
+
+<div class="ibox J-Edit">
+    <div class="ibox-title">
+        <h5><i class="fa fa-edit"></i> 任务详情页</h5>
+    </div>
+    <div class="ibox-content">
+        <form action="/Task/Edit" class="form-horizontal" method="post">
+            <% if($data.TMId){ %>
+                <input name="TMId" type="hidden" value="<%- $data.TMId -%>">
+            <% } %>
+            <div class="form-group">
+                <label class="col-lg-3 text-right"><span>任务名称</span> <span class="red">*</span></label>
+                <div class="col-lg-6">
+                    <input type="text" name="TMTitle" class="form-control" value="<%- $data.TMTitle -%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 text-right"><span>PM</span> <span class="red">*</span></label>
+                <div class="col-lg-6">
+                    <input type="text"  class="form-control" value="<%- PmName -%>" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 text-right"><span>所属小组</span> <span class="red">*</span></label>
+                <div class="col-lg-8">
+                    <%- partial('shared/comp/check-radio', {
+                        data: {
+                            type: 'checkbox',
+                            name: 'TMTeam',
+                            obj: commonInfo.map.teamEntity,
+                            value: $data.TMTeam
+                        }
+                    }) -%>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 text-right"><span>优先级</span> <span class="red">*</span></label>
+                <div class="col-lg-6">
+                    <%- partial('shared/comp/check-radio', {
+                        data: {
+                            type: 'radio',
+                            name: 'TMRank',
+                            obj: commonInfo.map.Rank,
+                            value: $data.TMRank
+                        }
+                    }) -%>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 text-right"><span>完成进度</span> <span class="red">*</span></label>
+                <div class="col-lg-6">
+                    <select name="TMIsFinish" v-model='TMIsFinish'>
+                        <option value="未完成">未完成</option>
+                        <option value="进行中">进行中</option>
+                        <option value="已完成">已完成</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 text-right"><span>任务描述</span> <span class="red">*</span></label>
+                <div class="col-lg-6">
+                    <textarea name="TMDescription" class="form-control" rows="5"><%- $data.TMDescription -%></textarea>
+                </div>
+            </div>
+
+                </form>
+                <!--<div class="well">
+                {{$data |json}}
+            </div>-->
+            </div>
+            <br/>
+            <div class="ibox-title">
+                <h5><i class="fa fa-edit"></i> 子任务详情</h5>
+                <a  class="btn btn-primary btn-xs btn-outline J-addTm" style="float:right"><i class="fa fa-trash-o"></i>新增</a>
+            </div>
+        <div class="ibox-content">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th nowrap>
+                                    <a href="javascript:;" v-on:click="getOrderData(1, 'TSMMissionId')" title="按照编号排序">操作 <i class="fa fa-arrows-v"></i></a>
+                                </th>
+                                
+                                <th nowrap>子任务名</th>
+                                <th nowrap>经办人</th>
+                                <th nowrap>
+                                    <a href="javascript:;" v-on:click="getOrderData(1, 'TSMSite')" title="按照站点排序"> 排期 <i class="fa fa-arrows-v"></i></a>
+                                </th>
+                                <th nowrap>
+                                    <a href="javascript:;" v-on:click="getOrderData(1, 'TSMFlag')" title="按照状态排序">状态 <i class="fa fa-arrows-v"></i></a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="J-tbody">
+                            <% $son.forEach(function(v,i){ %>
+                            <template v-if='<%- v.TMTitle !="" %>'>
+                                <tr>
+                                    <td>
+                                        <a href="" class="btn btn-primary btn-xs btn-outline J-edit" >
+                                            <i class="fa fa-edit"></i>修改
+                                        </a>
+                                        <a href="/Task/detail/del?title=<%- v.TMTitle %>&id=<%- $data.TMId -%>" class="btn btn-danger btn-xs btn-outline J-del" >
+                                            <i class="fa fa-trash-o"></i>删除
+                                        </a>
+                                    </td>
+                                    <td><%- v.TMTitle %></td>
+                                    <td><%- v.UserName %></td>
+                                    <td>
+                                        <%- v.TMTime %>
+                                    </td>
+                                    <td><%- v.TMIsFinish %></td>
+                                </tr>
+                            </template>
+                                
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+    
+    </div>
+    <%- include detail-iframe -%>
+</div>
+
+<script>
+setTimeout(function(){
+    new Vue({
+        el:".J-Edit",
+        data:{
+            TMIsFinish:'<%- $data.TMIsFinish%>',
+        },
+        ready:function(){
+            $('.J-addTm').click(function(){
+                layer.open({
+                    type: 1,
+                    shade: 0.8,
+                    title: '子任务编辑',
+                    area: ['950px', '600px'],
+                    content: $('.J-EditBox'),
+                    zIndex: 10,
+                    cancel: function(index){
+                        // 关闭;
+                        // item = obj_item;
+                        // console.log(213)
+                    }
+                }); 
+                $('.J-EditBox').removeClass('hide')
+            })
+            // $('.J-del').click(function(){
+
+            // })
+        },
+        methods:{
+            saveTmUser:function(){
+                $.ajax({
+                url: '/Task/detail/adUser?Tmid=<%- $data.TMId -%>',
+                data: $('.AdUserTm').serialize(),
+                type: 'post',
+                success: function (re) {
+                    console.log(re);
+                    location.reload();
+                }
+                });
+            }
+        }
+    }),
+    new CustomSelect2({
+            el: $("#se2_1"),
+            aysn: {
+                url: '/Task/douser',
+            },
+            key:'321',
+            init:function(){
+                console.log(321)
+                
+            },
+            callback_choose: function(re){
+                console.log(re);//re.val 可以拿到对应的val
+                // 
+                $('.J-TMDoUser').val(re.text)
+                
+            }
+        })
+},200)
+
+
+</script>

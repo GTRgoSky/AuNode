@@ -1,0 +1,105 @@
+<!--插件-->
+<% block('plug').append('datetimepicker') %>
+
+<!--页面引用脚本-->
+<% block('PageJS').append('\
+    <script src="/lib/simplePagination/1.6/jquery.simplePagination.js"></script>\
+    <script src="/js/task-list.js"></script>\
+') %>
+
+<div class="ibox" >
+    <div class="ibox-title">
+        <h5><i class="fa fa-bars"></i> 任务列表页</h5>
+        <a href="/Task/Edit" class="btn btn-xs btn-primary pull-right"><i class="fa fa-plus"></i> 新增</a>
+    </div>
+    <div class="ibox-content">
+        <form method="POST" action="/Task/List" class="form-horizontal J-SearchForm">
+            <input type="hidden" name="orderField" class="J-OrderField">
+            <input type="hidden" name="orderIndex" class="J-OrderIndex">
+            <div class="col-sm-6 col-lg-4">
+                <div class="form-group form-group-sm">
+                    <label class="col-md-4 control-label">编号</label>
+                    <div class="col-md-8">
+                        <input type="text" name="TMId" class="form-control" placeholder="请输入任务ID">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-4">
+                <div class="form-group form-group-sm">
+                    <label class="col-md-4 control-label">任务名称</label>
+                    <div class="col-md-8">
+                        <input type="text" name="TMTitle" class="form-control" placeholder="请输入任务名称">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-4">
+                <div class="form-group form-group-sm">
+                    <label class="col-md-4 control-label">涉及小组</label>
+                    <div class="col-md-8">
+                        <%- partial('shared/comp/select-option', {data: {obj: commonInfo.map.teamEntity, name: 'TMTeam'}}) %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-4">
+                <div class="form-group form-group-sm">
+                    <label class="col-md-4 control-label">有效性</label>
+                    <div class="col-md-8">
+                        <select class="form-control input-sm" name="TMIsValid" value="1">    
+                            <option value="1" selected="selected">有效</option>    
+                            <option value="2">已删除</option>     
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-4">
+                <div class="form-group form-group-sm">
+                    <label class="col-md-4 control-label">任务等级</label>
+                    <div class="col-md-8">
+                        <%- partial('shared/comp/select-option', {data: {obj: commonInfo.map.Rank, name: 'TMRank'}}) %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-4">
+                <div class="form-group form-group-sm">
+                    <label class="col-md-4 control-label">创建时间</label>
+                    <div class="col-md-8">
+                        <div class="input-daterange daterange input-group J-DateTimePickerRange">
+                            <input type="text" class="input-sm form-control" name="TMCreateTimeStart" readonly>
+                            <span class="input-group-addon">to</span>
+                            <input type="text" class="input-sm form-control" name="TMCreateTimeEnd" readonly>
+                            <span class="input-group-btn">
+                                <div class="btn btn-primary btn-sm J-ClearDate margin-0">清除</div>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-4">
+                <div class="form-group form-group-sm">
+                    <label class="col-md-4 control-label">编辑时间</label>
+                    <div class="col-md-8">
+                        <div class="input-daterange daterange input-group J-DateTimePickerRange">
+                            <input type="text" class="input-sm form-control" name="TMEditTimeStart" readonly>
+                            <span class="input-group-addon">to</span>
+                            <input type="text" class="input-sm form-control" name="TMEditTimeEnd" readonly>
+                            <span class="input-group-btn">
+                                <div class="btn btn-primary btn-sm J-ClearDate margin-0">清除</div>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-sm-6 col-lg-4">
+                <div class="form-group form-group-sm">
+                    <div class="col-md-8 col-md-offset-4">
+                        <a href="javascript:;" class="btn btn-sm btn-primary J-SearchBtn"><i class="fa fa-search"></i> 查询</a>
+                        <a href="javascript:;" class="btn btn-sm btn-primary J-ReSet"><i class="fa fa-circle-thin"></i> 重置</a>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </form>
+    </div>
+    <div class="J-TableBox"></div>
+</div>

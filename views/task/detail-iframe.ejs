@@ -1,0 +1,54 @@
+
+
+
+<div class="J-EditBox ibox form-horizontal hide">
+    <form class="AdUserTm">
+         <div class="ibox-content" style="border-bottom:0;">
+        <div class="form-group form-group-sm">
+            <label class="col-xs-2 control-label">子任务名 <span class="text-danger">*</span></label>
+            <div class="col-xs-9">
+                <input type="text" class="form-control" name="TMTitle" >
+            </div>
+        </div>
+        <div class="form-group">
+                <label class="col-lg-2 control-label"><span>经办人</span> <span class="red">*</span></label>
+                <div class="col-lg-9">
+                    <select class="form-control input-sm"   style="width:100%" id="se2_1" value=''>
+                        
+                    </select>
+                    <input type="hidden"  name="UserName" value='' class="J-TMDoUser">
+                </div>
+                
+        </div>
+        <div class="form-group form-group-sm">
+            <label class="col-xs-2 control-label">排期</label>
+            <div class="col-xs-9">
+                <div class="input-group" v-datetimepicker_range="{type:2}">
+                    <input type="text" class="input-sm form-control readonly J-DateTimePickerStart" readonly  name="TMTime">
+                </div>
+            </div>
+            <!---->
+        </div>
+       <div class="form-group">
+                <label class="col-xs-2 control-label"><span>完成进度</span> <span class="red">*</span></label>
+                <div class="col-lg-9">
+                    <select name="TMIsFinish" v-model='TMIsFinish'>
+                        <option value="未完成">未完成</option>
+                        <option value="进行中">进行中</option>
+                        <option value="已完成">已完成</option>
+                    </select>
+                </div>
+            </div>
+        <div class="form-group form-group-sm">
+            <div class="col-xs-10 col-xs-offset-2">
+                <a href="javascript:" class="btn btn-sm btn-primary" v-on:click='saveTmUser()'><i class="fa fa-save"></i> 保存</a>
+            </div>
+        </div>
+        </div>
+    </form>
+   
+    <div class="well J-VueJson" style="display:none;" v-show="$data">
+        <h2>以下内容仅供调试使用，正式环境请删除</h2>
+        <pre>{{ $data | json }}</pre>
+    </div>
+</div>

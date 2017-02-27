@@ -1,0 +1,29 @@
+<%
+    var text = data.text || '无权限！或者步骤逻辑出错！';
+    var link = data.link || 'javascript:;';
+    var newClass = '';
+
+    if(!data.logic && data.class){
+        var arr_class = data.class.split(' ');
+        for(var i = 0; i < arr_class.length; i++){
+            var clas = arr_class[i];
+            if(clas.indexOf('J-') == -1){
+                newClass += clas + ' ';
+            }
+        }
+    }
+%>
+
+<% if(data.logic){ %>
+    <a href="<%- link -%>"
+        class="btn <%- data.class -%>"
+        <%- data.opt -%>>
+        <%- data.html -%>
+    </a>
+<% } else { %>
+    <a href="javascript:;"
+        class="btn <%- newClass -%>"
+        onclick="toastr.warning('<%- text -%>');">
+        <%- data.html -%>
+    </a>
+<% } %>

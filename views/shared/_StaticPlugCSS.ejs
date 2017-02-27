@@ -1,0 +1,21 @@
+<% for(var i = 0; i < plug.length; i++){ %>
+    <% if(plug[i] == 'select2'){ %>
+        <link href="/lib/select2/4.0.2/dist/css/select2.min.css" rel="stylesheet" />
+    <% } else if(plug[i] == 'metismenu'){ %>
+        <link href="/css/human-resource.css" rel="stylesheet" />
+        <link href="/css/animate.css" rel="stylesheet" />
+        <link href="/css/list-edit.css" rel="stylesheet" />
+    <% } else if(plug[i] == 'datetimepicker'){ %>
+        <link href="/lib/datetimepicker/2.0/jquery.datetimepicker.css" rel="stylesheet" />
+    <% } else if(plug[i] == 'umeditor'){ %>
+        <link href="/lib/umeditor/1.2.2/themes/default/css/umeditor.min.css" rel="stylesheet" />
+    <% } else if(plug[i] == 'fullcalendar'){ %>
+        <link href="/lib/fullcalendar/2.4.0/fullcalendar.min.css" rel="stylesheet" />
+    <% } else if(plug[i] == 'intro'){ %>
+        <link href="/lib/intro.js-2.1.0/introjs.min.css" rel="stylesheet" />
+    <% } else if(plug[i] == 'nouislider'){ %>
+        <link href="/lib/nouislider/nouislider.min.css" rel="stylesheet" />
+    <% } else if(plug[i] == 'jstree'){ %>
+        <link href="/lib/jsTree/jstree.min.css" rel="stylesheet" />
+    <% } %>
+<% } %>

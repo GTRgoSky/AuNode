@@ -1,0 +1,53 @@
+<% for(var i = 0; i < plug.length; i++){ %>
+
+    <% if(plug[i] == 'vue'){ %>
+        <script src="/lib/vue/1.0.8/vue.min.js"></script>
+    <% } else if(plug[i] == 'vuedev'){ %>
+        <script src="/lib/vue/vue.js"></script>
+    <% } else if(plug[i] == 'select2'){ %>
+        <script src="/lib/select2/4.0.2/dist/js/select2.full.js"></script>
+        <script src="/lib/select2/4.0.2/dist/js/i18n/zh-CN.js"></script>
+        <script src="/js/ext/select2.js"></script>
+    <% } else if(plug[i] == 'datetimepicker'){ %>
+        <script src="/lib/datetimepicker/2.0/jquery.datetimepicker.js"></script>
+        <script src="/js/ext/datetimepicker.js"></script>
+    <% } else if(plug[i] == 'umeditor'){ %>
+        <script src="/lib/umeditor/1.2.2/umeditor.config.js"></script>
+        <script src="/lib/umeditor/1.2.2/umeditor.js"></script>
+        <script src="/js/ext/umeditor.js"></script>
+    <% } else if(plug[i] == 'validate'){ %>
+        <script src="/lib/jquery-validate/1.14.0/jquery.validate.js"></script>
+        <script src="/lib/jquery-validate/1.14.0/additional-methods.min.js"></script>
+        <script src="/js/ext/validate.js"></script>
+    <% } else if(plug[i] == 'jquery-file-upload'){ %>
+        <script src="/lib/jquery-file-upload/js/5.41.0/vendor/jquery.ui.widget.js"></script>
+        <script src="/lib/jquery-file-upload/js/5.41.0/jquery.fileupload.js"></script>
+    <% } else if(plug[i] == 'list'){ %>
+        <script src="/lib/simplePagination/1.6/jquery.simplePagination.js"></script>
+        <script src="/js/ext/vue-list.js"></script>
+    <% } else if(plug[i] == 'edit'){ %>
+        <script src="/lib/vue/1.0.16/vue.min.js"></script>
+        <script src="/js/ext/vue-edit.js"></script>
+    <% } else if(plug[i] == 'metismenu'){ %>
+        <script src="/lib/metisMenu/2.0.2/jquery.metisMenu.js"></script>
+        <script src="/js/inspinia.js"></script>
+    <% } else if(plug[i] == 'echarts3'){ %>
+        <script src="/lib/echarts/echarts3.1.4/echarts.min.js"></script>
+        <script src="/lib/echarts/echarts3.1.4/roma.js"></script>
+    <% } else if(plug[i] == 'clipboard'){ %>
+        <script src="/lib/clipboard/1.5.5/clipboard.min.js"></script>
+        <script src="/js/ext/clipboard.js"></script>
+    <% } else if(plug[i] == 'fullcalendar'){ %>
+        <script src="/lib/fullcalendar/2.4.0/moment.min.js"></script>
+        <script src="/lib/fullcalendar/2.4.0/fullcalendar.min.js"></script>
+        <script src="/lib/fullcalendar/2.4.0/zh-cn.js"></script>
+    <% } else if(plug[i] == 'intro'){ %>
+        <script src="/lib/intro.js-2.1.0/intro.min.js"></script>
+    <% } else if(plug[i] == 'nouislider'){ %>
+        <script src="/lib/nouislider/nouislider.min.js"></script>
+    <% } else if(plug[i] == 'icheck'){ %>
+        <script src="/lib/iCheck/icheck.min.js"></script>
+    <% } else if(plug[i] == 'jstree'){ %>
+        <script src="/lib/jsTree/jstree.min.js"></script>
+    <% } %>
+<% } %>

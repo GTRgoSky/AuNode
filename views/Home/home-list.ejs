@@ -1,0 +1,374 @@
+<div class="col-md-<%- commonInfo.leader ? '12' : '9' -%>">
+    <div class="ibox">
+        <div class="ibox-content">
+            <div class="tabs-container">
+                <div class="tabs-top">
+                    <div class="ulbox">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#tab-1">已分配任务</a></li>
+                            <li>
+                                <a href="#tab-2" data-toggle="tab" v-on:click="getOtherPage(2, 1);">未分配的任务</a>
+                            </li>
+                            <li>
+                                <a href="#tab-3" data-toggle="tab" v-on:click="getOtherPage(3, 2);">关于你的缺陷</a>
+                            </li>
+                            <li>
+                                <a href="#tab-4" data-toggle="tab" v-on:click="getOtherPage(4, 3);">关于你的BUG</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <div id="tab-1" class="tab-pane active J-Pane J-ProgressBarParent">
+                        <div class="panel-body J-ProgressBarShowEle">
+                            <div >
+                                <form id="SearchForm" class="form-horizontal">
+                                    <input type="hidden" name="orderItem"/>
+                                    <input type="hidden" name="orderType"/>
+                                    <div class="col-sm-6 col-lg-4">
+                                        <div class="form-group form-group-sm">
+                                            <label class="col-md-3 control-label">分配人</label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                    <select class="form-control" name="CreatorNum"></select>
+                                                    <span class="input-group-btn">
+                                                        <a class="btn btn-primary btn-sm margin-0 J-Select2MySelf">只看自己</a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-4">
+                                        <div class="form-group form-group-sm">
+                                            <label class="col-md-3 control-label">经办人</label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                    <select class="form-control" name="OperatorNum" ></select>
+                                                    <span class="input-group-btn">
+                                                        <a class="btn btn-primary btn-sm margin-0 J-Select2MySelf">只看自己</a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-4">
+                                        <div class="form-group form-group-sm">
+                                            <label class="col-md-3 control-label">是否延期</label>
+                                            <div class="col-md-9">
+                                                <select class="form-control input-sm" name="IsLate">
+                                                    <option value="">--请选择--</option>
+                                                    <option value="1">已延期</option>
+                                                    <option value="2">未延期</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-4">
+                                        <div class="form-group form-group-sm">
+                                            <label class="col-md-3 control-label">是否排期</label>
+                                            <div class="col-md-9">
+                                                <select class="form-control input-sm" name="IsArranged">
+                                                    <option value="">--请选择--</option>
+                                                    <option value="1">已排期</option>
+                                                    <option value="2">未排期</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-4">
+                                        <div class="form-group form-group-sm">
+                                            <label class="col-md-3 control-label">优先级</label>
+                                            <div class="col-md-9">
+                                                <select class="form-control input-sm" name="Rank">
+                                                    <option value="">--请选择--</option>
+                                                    <option value="1">高</option>
+                                                    <option value="2">中</option>
+                                                    <option value="3">低</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-4">
+                                        <div class="form-group form-group-sm">
+                                            <label class="col-md-3 control-label">是否完成</label>
+                                            <div class="col-md-9">
+                                                <select class="form-control input-sm" name="IsTest">
+                                                    <option value="">--请选择--</option>
+                                                    <option value="1">未完成</option>
+                                                    <option value="2">进行中</option>
+                                                    <option value="3">已完成</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <search-btn
+                                        class-name="col-sm-6 col-lg-4"
+                                        :clear-search="true"
+                                        offset="3"
+                                        opt="<span class='red' style='white-space: nowrap;'>（仅限导出延期任务）</span>"
+                                        export-url="<%- commonInfo.ConnectHost -%>/Task/ExportSubTask?IsLate=1"></search-btn>
+                                </form>
+                                <hr />
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th nowrap style="width:120px;">操作</th>
+                                                <th nowrap>
+                                                    <a href="javascript:;" v-on:click="getOrderData(1, 'TSMMissionId')" title="按照编号排序">编号 <i class="fa fa-arrows-v"></i></a>
+                                                </th>
+                                                <th nowrap>主任务名</th>
+                                                <th nowrap>子任务名</th>
+                                                <th nowrap>
+                                                    <a href="javascript:;" v-on:click="getOrderData(1, 'TMRank')" title="按照优先级排序">优先级 <i class="fa fa-arrows-v"></i></a>
+                                                </th>
+                                                <th nowrap>
+                                                    <a href="javascript:;" v-on:click="getOrderData(1, 'TSMCreatorNum')" title="按照分配人排序">分配人 <i class="fa fa-arrows-v"></i></a>
+                                                </th>
+                                                <th nowrap>
+                                                    <a href="javascript:;" v-on:click="getOrderData(1, 'TSMOperatorNum')" title="按照经办人排序">经办人 <i class="fa fa-arrows-v"></i></a>
+                                                </th>
+                                                <th nowrap>
+                                                    <a href="javascript:;" v-on:click="getOrderData(1, 'TSMSite')" title="按照站点排序">站点 <i class="fa fa-arrows-v"></i></a>
+                                                </th>
+                                                <th nowrap>
+                                                    <a href="javascript:;" v-on:click="getOrderData(1, 'TSMFlag')" title="按照状态排序">状态 <i class="fa fa-arrows-v"></i></a>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <template v-for="item in listdata.items" >
+                                                <tr>
+                                                    <td nowrap v-show="listdata.editIndex != $index">
+                                                        <template v-if="item.TMPubStatus == 1">
+                                                            <template v-if="item.TSMPace == 100">
+                                                                <a href="javascript:;"
+                                                                    class="btn btn-sm btn-primary btn-outline"
+                                                                    style="width:100%;"
+                                                                    v-on:click="edit($index)"><i class="fa fa-edit"></i> 更新</a>
+                                                            </template>
+                                                            <template v-else>
+                                                                <div class="btn-group btn-group-sm full-width">
+                                                                    <a href="javascript:;"
+                                                                        class="btn btn-sm btn-info btn-outline"
+                                                                        style="width:49%;"
+                                                                        title="进度设为100%"
+                                                                        v-on:click="save($index, 1)">100%</a>
+                                                                    <a href="javascript:;"
+                                                                        class="btn btn-sm btn-primary btn-outline"
+                                                                        style="width:49%;"
+                                                                        title="更新"
+                                                                        v-on:click="edit($index)"><i class="fa fa-edit"></i></a>
+                                                                </div>
+                                                            </template>
+                                                        </template>
+                                                        <template v-else>
+                                                            <a href="javascript:;" class="btn btn-sm btn-warning disabled" style="width:100%;"><i class="fa fa-check-square"></i> 已通过</a>
+                                                        </template>
+                                                    </td>
+                                                    <td nowrap v-show="listdata.editIndex == $index">
+                                                        <div class="btn-group btn-group-sm full-width">
+                                                            <a href="javascript:;"
+                                                                class="btn btn-sm btn-primary btn-outline"
+                                                                title="保存"
+                                                                style="width:50%;"
+                                                                v-on:click="save($index);"><i class="fa fa-save"></i></a>
+                                                            <a href="javascript:;"
+                                                                class="btn btn-sm btn-danger btn-outline"
+                                                                title="取消"
+                                                                style="width:50%;"
+                                                                v-on:click="cancel($index)"><i class="fa fa-ban"></i></a>
+                                                        </div>
+                                                    </td>
+                                                    <td nowrap v-show="listdata.editIndex != $index">{{item.TSMPace}}%</td>
+                                                    <td nowrap v-show="listdata.editIndex == $index">
+                                                        <div class="input-group" style="width: 120px;">
+                                                            <input type="text" class="input-sm form-control" v-model="item.TSMPace" maxlength="3">
+                                                            <span class="input-group-addon btn btn-outline btn-primary" v-on:click="item.TSMPace = 100">100%</span>
+                                                        </div>
+                                                    </td>
+                                                    <td nowrap style="width:50px;">{{item.TSMMissionId}}</td>
+                                                    <td nowrap class="title-txt">
+                                                        <a href="/Task/Detail?id={{item.TSMMissionId}}" target="_blank" title="{{item.TMTitle}}">{{item.TMTitle}}</a>
+                                                    </td>
+                                                    <td nowrap class="title-txt">{{item.TSMTitle}}</td>
+                                                    <td nowrap>
+                                                        <span class="label label_{{item.TMRank}}">{{item.TMRankStr}}</span>
+                                                    </td>
+                                                    <td nowrap>{{item.TSMCreatorName}}</td>
+                                                    <td nowrap>{{item.TSMOperatorName}}</td>
+                                                    <td nowrap>
+                                                        <badgecomp
+                                                            :badge=item.TSMSiteArr
+                                                            :count=2>
+                                                        </badgecomp>
+                                                    </td>
+                                                    <td nowrap>
+                                                        <span v-if="item.TSMFlag == 1">未完成</span>
+                                                        <span v-if="item.TSMFlag == 2">进行中</span>
+                                                        <span v-if="item.TSMFlag == 3">已完成</span>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-5 col-sm-12">总计{{ listdata.count || 0 }}条，每页显示{{ listdata.pagesize || 10 }}条</div>
+                                    <div class="col-md-7 col-sm-12 text-right" id="Pagination" v-show="listdata.count > listdata.pagesize"></div>
+                                </div>
+                            </div>
+                            <h1 class="text-center" style="height: 400px; line-height:400px;" v-show="!listdata.count">暂无已分配任务哦！<h1>
+                        </div>
+                    </div>
+                    <div id="tab-2" class="tab-pane J-Pane J-ProgressBarParent">
+                        <div class="panel-body J-ProgressBarShowEle">
+                            <div v-show="otherPageList2.count">
+                                <form class="form-horizontal">
+                                    <input type="hidden" name="orderItem"/>
+                                    <input type="hidden" name="orderType"/>
+                                    <input type="hidden" name="pageindex"/>
+                                    <div class="form-group" style="position: absolute;right: 36px;top: 29px;">
+                                        <a href="javascript:;"
+                                            class="btn btn-xs btn-primary"
+                                            v-on:click="clearOtherPage(2)">
+                                            <i class="fa fa-circle-thin"></i> 重置</a>
+                                    </div>
+                                </form>
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th nowrap>编号</th>
+                                                <th nowrap>主任务名</th>
+                                                <th nowrap>PM</th>
+                                                <th nowrap>
+                                                    <a href="javascript:;"
+                                                        v-on:click="getOrderData(2, 'TMRank')"
+                                                        title="按照优先级排序">优先级 <i class="fa fa-arrows-v"></i></a>
+                                                </th>
+                                                <th nowrap>
+                                                    <a href="javascript:;"
+                                                        v-on:click="getOrderData(2, 'TMPlat')"
+                                                        title="按照平台排序">平台 <i class="fa fa-arrows-v"></i></a>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="item in otherPageList2.items">
+                                                <td nowrap style="width:50px;">{{item.TMId}}</td>
+                                                <td nowrap class="title-txt">
+                                                    <a href="/Task/Detail?id={{item.TMId}}" target="_blank"  title="{{item.TMTitle}}">{{item.TMTitle}}</a>
+                                                </td>
+                                                <td nowrap>{{item.TMPmUserName}}</td>
+                                                <td nowrap>
+                                                    <span class="label label_{{item.TMRank}}">{{item.TMRankStr}}</span>
+                                                </td>
+                                                <td style="max-width:200px;">
+                                                    <badgecomp
+                                                        :badge=item.TMPlatArr
+                                                        :count=3>
+                                                    </badgecomp>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-5 col-sm-12">总计{{otherPageList2.count}}条，每页显示{{otherPageList2.pagesize}}条</div>
+                                    <div class="col-md-7 col-sm-12 text-right J-Pagination"></div>
+                                </div>
+                            </div>
+                            <h1 class="text-center" style="height: 400px; line-height:400px;" v-show="!otherPageList2.count">暂无未分配任务哦！<h1>
+                        </div>
+                    </div>
+                    <div id="tab-3" class="tab-pane J-Pane J-ProgressBarParent">
+                        <div class="panel-body J-ProgressBarShowEle">
+                            <div v-show="otherPageList3.count">
+                                <form class="form-horizontal">
+                                    <input type="hidden" name="pagesize" value="99"/>
+                                </form>
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th nowrap>名称</th>
+                                                <th nowrap>创建时间</th>
+                                                <th nowrap>创建人</th>
+                                                <th nowrap>状态</th>
+                                                <!-- <th nowrap>操作</th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="item in otherPageList3.items">
+                                                <td nowrap class="title-txt"><a href="/Defect/Detail?id={{item.TBMId}}">{{item.TBMTitle}}</a></td>
+                                                <td nowrap>{{item.TBMCreateDate}}</td>
+                                                <td nowrap>{{item.TBMCommitorName}}</td>
+                                                <td nowrap>{{item.TBMStatusStr}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-5 col-sm-12">总计{{ otherPageList3.count}}条</div>
+                                </div>
+                            </div>
+                            <h1 class="text-center" style="height: 400px; line-height:400px;" v-show="!otherPageList3.count">暂无缺陷哦！<h1>
+                        </div>
+                    </div>
+                    <div id="tab-4" class="tab-pane J-Pane">
+                        <div class="J-ProgressBarParent">
+                            <div class="panel-body J-ProgressBarShowEle">
+                                <div v-show="otherPageList4.count">
+                                    <form class="form-horizontal">
+                                        <input type="hidden" name="pagesize" value="99"/>
+                                        <input type="hidden" name="isCreator"/>
+                                        <input type="hidden" name="isOperator"/>
+                                        <div class="form-group form-group-sm">
+                                            <div class="col-md-12">
+                                                <a href="javascript:;" class="btn btn-sm btn-primary" v-on:click="searchBug(1);"><i class="fa fa-search"></i> 你分配出的BUG</a>
+                                                <a href="javascript:;" class="btn btn-sm btn-primary" v-on:click="searchBug(2);"><i class="fa fa-search"></i> 分配给你的BUG</a>
+                                                <a href="javascript:;" class="btn btn-sm btn-primary" v-on:click="clearOtherPage(2)"><i class="fa fa-circle-thin"></i> 重置</a>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="clearfix"></div>
+                                    <hr />
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th nowrap>名称</th>
+                                                    <th nowrap>创建人</th>
+                                                    <th nowrap>经办人</th>
+                                                    <th nowrap>状态</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="item in otherPageList4.items">
+                                                    <td nowrap class="title-txt">
+                                                        <a href="/OnlineBug/List">{{item.TOBTitle}}</a><!-- ?id={{item.TOBId}} -->
+                                                    </td>
+                                                    <td nowrap>{{item.TOBCreatorName}}</td>
+                                                    <td nowrap>{{item.TOBOperatorName}}</td>
+                                                    <td nowrap>{{item.TOBFlagStr}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <hr />
+                                        <div class="col-md-5 col-sm-12">总计{{otherPageList4.count}}条</div>
+                                    </div>
+                                </div>
+                                <h1 class="text-center" style="height: 400px; line-height:400px;" v-show="!otherPageList4.count">暂无BUG哦！<h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,67 @@
+<nav class="navbar-default navbar-static-side J-FrameSideNav" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav metismenu" id="side-menu">
+            <li class="nav-header">
+                <div class="logo-element">
+                    <img alt="" class="img-circle" src="">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="text-muted text-xs block" style="font-size:12px;margin-top: 10px;">
+                            <%- UserName%>
+                        </span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <a href="/Home/Home?UserName=<%- UserName%>">首页</a>
+            </li>
+            <li>
+                <a href="javascript:;">任务管理</a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="/Task/List?UserName=<%- UserName%>">任务列表</a></li>
+                    <li><a href="/Task/HumanResource">人力视图</a></li>
+                    <li><a href="/Demand/List">需求列表</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;">测试管理</a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="/TestCase/Index">测试用例</a></li>
+                    <li><a href="/Defect/List">缺陷列表</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;">发布管理</a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="/Publish/List">发布列表</a></li>
+                    <li><a href="/OnlineBug/List">线上BUG列表</a></li>
+                    <li><a href="/Trouble/List">故障列表</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;">数据统计</a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="/Echarts/Publish">任务统计</a></li>
+                    <li><a href="/Echarts/EmployeeGrowth">组内对比</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;">关于极光</a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="/Home/PlatStation" target="_blank">平台站点配置</a></li>
+                    <li><a href="/Home/FlowChart" target="_blank">流程引导图</a></li>
+                    <li><a href="/Home/History" target="_blank">版本推进</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+<style>
+    .navbar-static-side{
+        width: 90px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 9999 !important;
+    }
+</style>

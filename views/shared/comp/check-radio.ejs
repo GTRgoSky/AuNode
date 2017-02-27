@@ -1,0 +1,23 @@
+<% for(i in data.obj){%>
+    <% var _obj = data.obj[i]; %>
+    <div class="<%- data.type -%>-inline">
+        <% if(data.type == 'radio'){ %>
+            <input type="radio" value="<%- i -%>" name="<%- data.name -%>"
+                id="<%- data.name -%>-<%- i -%>" <%- i == data.value ? 'checked' : '' -%> <%- data.option -%>>
+        <% } else if(data.type == 'checkbox'){ %>
+            <% var check = ''; %>
+            <% if(data.value){ %>
+                <% data.value = data.value.constructor == String ? data.value.split(',') : data.value; %>
+                <% for(var j = 0; j < data.value.length; j++){ %>
+                    <% if(data.value[j] == i){ %>
+                        <% check = 'checked';break; %>
+                    <% } %>
+                <% } %>
+            <% } %>
+            <input type="checkbox" value="<%- i -%>" name="<%- data.name -%>" id="<%- data.name -%>-<%- i -%>" <%- check -%> <%- data.option -%>>
+        <% } %>
+        <label for="<%- data.name %>-<%- i -%>" <%- data.title ? 'title="' + _obj + '"' : '' -%>>
+            <%- _obj -%>
+        </label>
+    </div>
+<% } %>

@@ -1,0 +1,12 @@
+<% var _cn = data.classname || 'form-control input-sm' %>
+<% var _obj = data.obj; %>
+<% var _mark = data.isshowmark == 0 ? 0 : 1; %>
+<select class="<%- _cn -%>" name="<%- data.name -%>" value="<%- data.value -%>" <%- data.option -%>>
+    <% if(_mark == 1){ %>
+        <option value="">--请选择--</option>
+    <% } %>
+    <% for(var i in _obj){ %>
+        <% var selected = i == data.value ? 'selected' : '' %>
+        <option value="<%- i %>" <%- selected %>><%- _obj[i] -%></option>
+    <% } %>
+</select>
