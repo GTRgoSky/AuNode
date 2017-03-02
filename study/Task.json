@@ -1,0 +1,43 @@
+{
+	"_id" : ObjectId("5826c9284a9b550f6c0d1d0f"),
+	"TMTitle" : "测试",
+	"TMRank" : 2,
+	"TMIsFinish" : "未完成",
+	"TMDescription" : "测试",
+	"TMUserId" : 1,
+	"TMEditTime" : ISODate("2016-10-19T17:28:13.836+08:00"),
+	"TMCreateTime" : ISODate("2016-10-19T17:28:13.836+08:00"),
+	"TMIsValid" : NumberInt("1"),
+	"TMTeam" : [
+		"1",
+		"24"
+	],
+	"TMId" : 0,
+	"__v" : 0,
+	"TMDoUser" : [
+		"你好我是第一个用户",
+		"你好我是第3个用户"
+	],
+	"TMDelTime" : ISODate("2016-12-04T17:32:29.442+08:00")
+},
+{
+	"_id" : ObjectId("5843e42de4b32725243af54d"),
+	"TMTitle" : "测试",
+	"TMRank" : NumberInt("1"),
+	"TMIsFinish" : "进行中",
+	"TMDescription" : "测试",
+	"TMUserId" : NumberInt("5"),
+	"TMEditTime" : ISODate("2017-03-02T21:37:06.621+08:00"),
+	"TMCreateTime" : ISODate("2016-12-04T17:37:07.623+08:00"),
+	"TMIsValid" : NumberInt("1"),
+	"TMTeam" : [
+		"1",
+		"24"
+	],
+	"TMId" : NumberInt("1"),
+	"__v" : NumberInt("0"),
+	"TMDoUser" : [
+		"你好我是第一个用户",
+		"你好我是第3个用户"
+	]
+},

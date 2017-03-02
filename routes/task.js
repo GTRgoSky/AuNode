@@ -15,7 +15,7 @@ router.get('/Edit', function(req, res, next) {
 
     res.setHeader('content-type', 'text/html; charset=utf-8');
 
-    var _obj = {$data: {},"UserName":req.query.UserName};
+    var _obj = {$data: {},"UserName":req.session.UserName};
     var TMId = req.query.id;
 
     if(TMId){
@@ -39,6 +39,10 @@ router.get('/Edit', function(req, res, next) {
         userModel.findOne({UserId:re.TMUserId}, function(err, reason){
             if(err) {
                 res.write(err);
+                return res.end();
+            }
+            if(reason.UserRoot !=1 || reason.UserRoot !=2){
+                res.redirect("/Task/List?msg=err");
                 return res.end();
             }
             _obj.PmName = reason.UserName;
@@ -139,7 +143,7 @@ router.get('/List', function(req, res, next) {
     if(req.session.UserId){
         res.setHeader('content-type', 'text/html; charset=utf-8');
 
-        res.render('task/list', {"UserName":req.query.UserName},function(err, str){
+        res.render('task/list', {"UserName":req.session.UserName},function(err, str){
             if(err) console.log(err.msg);
             res.write(str);
             res.end();
@@ -180,10 +184,8 @@ router.post('/List', function(req, res, next) {
     // var _query = taskModel.find(obj_search);// QueryBuilder接口
 
     taskModel.count(obj_search)// 优先选用
-        .then(function(re){// 列表集合
-            // _obj.counts = re.length;
+        .then(function(re){// 列表集合s
             _obj.counts = re;
-
             return  taskModel.find(obj_search)
                 .sort(_data.orderField ? (_data.orderIndex == 1 ? '' : '-' ) + _data.orderField : '-TMId')
                 .limit(_obj.pageSize)
@@ -231,7 +233,7 @@ router.get('/detail', function(req, res, next) {
 // detailModel
     res.setHeader('content-type', 'text/html; charset=utf-8');
 
-    var _obj = {$data: {},"UserName":req.query.UserName,$son:{}};
+    var _obj = {$data: {},"UserName":req.session.UserName,$son:{}};
     var TMId = req.query.id;
 
     if(TMId){

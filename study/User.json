@@ -1,0 +1,31 @@
+{
+	"_id" : ObjectId("5826cd864a9b550f6c0d1d2a"),
+	"UserId" : 1,
+	"UserName" : "root",
+	"UserPassWord" : "root",
+	"UserRoot" : 1
+},
+{
+	"_id" : ObjectId("5826cdc8d0c9a817c8ca28a7"),
+	"UserId" : NumberInt("5"),
+	"UserName" : "321",
+	"UserPassWord" : "321",
+	"UserRoot" : 9,
+	"__v" : NumberInt("0")
+},
+{
+	"_id" : ObjectId("58281a3758a9671bf851aa96"),
+	"UserId" : NumberInt("11"),
+	"UserName" : "你好我是第一个用户",
+	"UserPassWord" : "mimama",
+	"UserRoot" : 2,
+	"__v" : NumberInt("0")
+},
+{
+	"_id" : ObjectId("58281a76d7e82823903aaf5c"),
+	"UserId" : NumberInt("13"),
+	"UserName" : "你好我是第3个用户",
+	"UserPassWord" : "333333",
+	"UserRoot" : 2,
+	"__v" : NumberInt("0")
+},

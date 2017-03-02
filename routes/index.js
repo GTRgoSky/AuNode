@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/LoginPage',function(req, res, next){
     if(req.session.UserId){
-        res.redirect('/Home/Home?UserName='+req.query.UserName)
+        res.redirect('/Home/Home?UserName='+req.session.UserName)
     }else{
         res.render('user/login', {"UserName":'请登录',"errorMessage":false},function(err, str){
             if(err) console.log(err.msg);
@@ -63,6 +63,7 @@ router.post('/regist',function(req, res, next){
     taskCounter.findByIdAndUpdate({_id: 'UserId'}, {$inc: {seq: 1}}).then(function(re){
                 // 设置任务ID
                 req.body.UserId = re.seq;
+                req.body.UserRoot = 0 ;
                 return taskModel.create(req.body);
             }).then(function(re){
                 req.session.UserId=re.UserId;
