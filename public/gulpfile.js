@@ -45,22 +45,21 @@ function buildCss(styleSrc) {
 }
 
 // require编译
+// require编译
 function bundle(b, file) {
-    console.log('file: ' + file);
+    console.log(file)
     return b.bundle()
-        .on("error", notify.onError(function(error) {
+        .on("error", notify.onError(function (error) {
             gutil.log('======= ERROR. ========\n', error);
             return "Message to the notifier: " + error.message;
         }))
         .pipe(source(file))
         .pipe(buffer())
-        .pipe(babel({
-            presets: ['es2015', 'stage-3']
-        }))
-        .pipe(sourcemaps.init({ loadMaps: true }))
+        .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest('dest/js'));
+        .pipe(gulp.dest('./dest/js'));
 }
+
 
 // 根据变动生成css与js
 function buildCssAndJs() {
@@ -79,7 +78,8 @@ function buildCssAndJs() {
         var path = event.path.replace(/\\/g, '/');
         console.log('path:'+path);
         var reg = path.match(/(\/src(\/\w+)*)?\/([\w]+.js)?$/),
-            src = reg[1],
+            src = reg[0],
+            // src="D:/src",
             fileName = reg[3];
         console.log(JSON.stringify(reg));
         console.log(JSON.stringify(src));
@@ -87,7 +87,7 @@ function buildCssAndJs() {
         var b = watchify(browserify(assign({}, watchify.args, {
             cache: {},
             packageCache: {},
-            entries: [src]
+            entries: [path]
         })));
 
         b.on('log', gutil.log);
