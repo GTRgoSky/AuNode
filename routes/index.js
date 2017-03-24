@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/LoginPage',function(req, res, next){
     if(req.session.UserId){
-        res.redirect('/Home/Home?UserName='+req.session.UserName)
+        res.redirect('/home/home?UserName='+req.session.UserName)
     }else{
         res.render('user/login', {"UserName":'请登录',"errorMessage":false},function(err, str){
             if(err) console.log(err.msg);
@@ -36,7 +36,7 @@ router.post('/login',function(req, res, next){
             }
             req.session.UserId=re.UserId;
             req.session.UserName=decodeURIComponent(re.UserName);
-            res.redirect('/Home/Home');//登录成功后返回到Task页面附带用户Name
+            res.redirect('/home/home');//登录成功后返回到Task页面附带用户Name
         }else{
             res.render('user/login', {"UserName":'请登录',"errorMessage":true},function(err, str){
                 if(err) console.log(err.msg);

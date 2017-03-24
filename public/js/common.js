@@ -183,7 +183,7 @@ var commonMethods = {
             }
         }
         if (canshow == 0) {
-            window.location.href = '/Home/Illegal?type=1';
+            window.location.href = '/home/Illegal?type=1';
             return;
         }
     },

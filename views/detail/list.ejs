@@ -1,0 +1,78 @@
+<!--插件-->
+<% block('plug').append('vuedev,list,datetimepicker,select2') %>
+
+<!--页面引用脚本-->
+<% block('PageJS').append('<script src="/Static/js/onlinebug-list.js"></script>') %>
+
+<!--页面引用样式-->
+<% block('PageCSS').append('<style>\
+.pub-style{\
+    width: 100%;\
+    text-align: center;\
+    display: block;\
+    border: 1px solid #ccc;\
+    border-radius: 2px;\
+    color: #acacac;\
+}\
+.fa{\
+width:12px;\
+}\
+</style>') %>
+
+<!--title-->
+<% block('title').append('线上BUG列表页') %>
+
+
+<div class="wrapper" id="listApp" style="display:none;" v-show="$data">
+    <div class="ibox">
+        <div class="ibox-title">
+            <h5><i class="fa fa-search"></i> 查询</h5>
+        </div>
+        <div class="ibox-content p-xs">
+            <form class="form-horizontal" id="SearchForm">
+                <div class="row">
+                    <div class="col-sm-6 col-lg-4">
+                        <div class="form-group form-group-sm">
+                            <label for="" class="col-md-4 control-label">名称</label>
+                            <div class="col-md-8">
+                                <input type="text" name="TOBTitle" class="form-control input-sm" placeholder="请输入名称" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4">
+                        <div class="form-group form-group-sm">
+                            <label for="" class="col-md-4 control-label">责任人</label>
+                            <div class="col-md-8">
+                                <select class="form-control" name="TOBOperatorNum" v-select2_request="{url:/Base/GetUserList}"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4">
+                        <div class="form-group form-group-sm">
+                            <label for="" class="col-md-4 control-label">类型</label>
+                            <div class="col-md-8">
+                                <%- partial('shared/comp/select-option', {data: {obj: onlinebugMap.TOBFlag, name: 'TOBFlag'}}) %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4">
+                        <div class="form-group form-group-sm">
+                            <label for="" class="col-md-4 control-label">优先级</label>
+                            <div class="col-md-8">
+                                <%- partial('shared/comp/select-option', {data: {obj: onlinebugMap.TOBRank, name: 'TOBRank'}}) %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <search-btn class-name="col-sm-6 col-lg-4" :clear-search="true" export-url="<%- connectHost %>/Bug/AllSingleBugExport"></search-btn>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <%- include list-table-vue %>
+    <div class="well J-VueJson" style="display:none;" v-show="$data">
+        <h2>以下内容仅供调试使用，正式环境请删除</h2>
+        <pre>{{ $data | json }}</pre>
+    </div>
+</div>

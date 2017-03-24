@@ -1,0 +1,38 @@
+<!--title-->
+<% block('title').append('流程概览') %>
+
+<!--页面引用脚本-->
+<% block('PageJS').append("<script>\
+        $('.fadeInRight').removeClass('fadeInRight');\
+        $('.J-ToTop').click(function () {\
+            $('.J-FrameCont').animate({ scrollTop: '0px' }, 800);\
+        });\
+</script>") %>
+
+<!--页面引用样式-->
+<% block('PageCSS').append('<style>\
+    img {\
+        max-width: 100%;\
+    }\
+    .totop {\
+        position: fixed;\
+        bottom: 45px;\
+        right: 30px;\
+        width: 50px;\
+        height: 50px;\
+        border-radius: 25px;\
+        line-height: 35px;\
+    }\
+</style>') %>
+
+<div class="ibox">
+    <div class="ibox-content">
+        <div class="col-md-10 col-md-offset-1">
+            <a href="/home/FlowChart?type=1" class="btn btn-info btn-outline animated flipInY">流程图</a>
+            <hr />
+            <img src="/src/img/FlowChart.png" />
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<a href="javascript:;" class="btn btn-primary totop J-ToTop">TOP</a>

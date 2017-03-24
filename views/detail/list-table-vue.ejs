@@ -1,0 +1,106 @@
+<%
+    var jobNumber = commonInfo.JobNumber;
+    var SA = commonInfo.SA;
+    var QA = commonInfo.QA;
+ %>
+<div class="ibox">
+    <div class="ibox-title">
+        <h5><i class="fa fa-search"></i> 列表</h5>
+        <div class="ibox-tools">
+            <a href="/OnlineBug/Edit" class="btn btn-xs btn-primary"><i class="fa fa-plus"></i> 新增</a>
+        </div>
+    </div>
+    <div class="ibox-content J-ProgressBarParent">
+        <div class="table-responsive J-ProgressBarShowEle">
+            <div class="table-responsive">
+                <table class="footable table table-stripped toggle-arrow-tiny tablet breakpoint ">
+                    <thead>
+                        <tr>
+                            <th nowrap style="width: 145px;">状态操作</th>
+                            <th nowrap>编号</th>
+                            <th nowrap style="width: 248px;">名称</th>
+                            <th nowrap>记录人/时间</th>
+                            <th nowrap>站点</th>
+                            <th nowrap>责任人</th>
+                            <th nowrap>所属小组</th>
+                            <th nowrap>状态</th>
+                            <th nowrap>优先级</th>
+                            <th nowrap>处理状态时间</th>
+                            <th nowrap>发布类型</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="item in listdata.items">
+                            <td nowrap  class="btn-group btn-group-sm" style="width: 145px;">
+                                <!-- 发布状态按钮 -->
+                                <template v-if="item.TOBFlag == 3 || item.TOBFlag == 6">
+                                    <a href="javascript:;"
+                                        class="btn btn-xs btn-success J-ActionLink btn-outline"
+                                        data-link="/onlinebug/ApplyPublish?id={{item.TOBId}}&type=2" 
+                                        data-head="申请发布"
+                                        data-type="iframe"
+                                        data-size="800px,300px" title="申请发布"><i class="fa fa-send-o"></i> 发布</a>
+                                </template>
+                                <template v-else>
+                                    <template v-if="item.TOBFlag == 1">
+                                        <a href="javascript:;" class="btn btn-xs btn-info btn-outline" v-on:click="setFlag($index);" title="快速处理"><i class="fa fa-edit"></i> 处理</a>
+                                    </template>
+                                    <template v-else>
+                                        <template v-if="item.TOBFlag == 5">
+                                            <span class="pub-style"><i class="fa fa-ban"></i> 已经发布</span>
+                                        </template>
+                                        <template v-else>
+                                            <a href="/Publish/List" class="btn btn-xs btn-warning btn-outline full-width" title="跳转至发布列表"><i class="fa fa-ban"></i> 发布处理中</a>
+                                        </template>
+                                    </template>
+                                </template>
+                                <!-- 编辑,删除按钮 -->
+                                <template v-if="!(item.TOBFlag == 4 || item.TOBFlag == 5)">
+                                    <a href="/OnlineBug/Edit?id={{item.TOBId}}" class="btn btn-xs btn-primary btn-outline" title="编辑"><i class="fa fa-edit"></i></a>
+                                    <a href="javascript:;" 
+                                        class="btn btn-xs btn-danger J-ActionLink btn-outline" 
+                                        data-link="/OnlineBug/DeleteOnlineBug?id={{item.TOBId}}" 
+                                        data-content="确定要删除【{{item.TOBTitle}}】吗？" title="删除"><i class="fa fa-trash-o" v-on:click.stop></i></a>
+                                </template>
+                                <!-- 删除按钮 -->
+                            </td>
+                            <td nowrap>{{item.TOBId}}</td>
+                            <td nowrap  style="padding-left: 10px;">
+                                <a href="/OnlineBug/Detail?id={{item.TOBId}}" 
+                                target="_blank" class="ellipsis block" 
+                                data-toggle="tooltip" title="{{item.TOBTitle}}"
+                                style="width:248px;"
+                                data-placement="left">{{item.TOBTitle}}</a>
+                            </td>
+                            <td nowrap>{{item.TOBCreatorName}}/{{item.TOBCreateDateStr}}</td>
+                            <td>
+                                <badgecomp
+                                    :badge=item.TOBSiteArr
+                                    :count=3>
+                                </badgecomp>
+                            </td>
+                            <td nowrap>{{item.TOBOperatorName}}</td>
+                            <td nowrap>{{item.TOBOperatorTeam}}</td>
+                            <td nowrap class="{{item.TOBFlagStr=='发布失败重新发布' ? 'text-danger' : ''}}">{{item.TOBFlagStr}}</td>
+                            <td nowrap>
+                                <span class="label label_{{item.TOBRank}}">{{ item.TOBRankStr }}</span>
+                            </td>
+                            <td nowrap>{{ item.TOBTypeDateStr == "1990-01-01 12:00:00" ? "/" : item.TOBTypeDateStr }}</td>
+                            <td nowrap>
+                                {{ item.TOBTypeStr }}
+                            </td>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="ibox-footer">
+        <div class="row">
+            <div class="col-md-5 col-sm-12">总计{{ listdata.count || 0 }}条，每页显示{{ listdata.pagesize || 10 }}条</div>
+            <div class="col-md-7 col-sm-12 text-right" id="Pagination">
+            </div>
+        </div>
+    </div>
+</div>

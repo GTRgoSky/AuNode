@@ -181,7 +181,7 @@
                 if (pace == 1) _data.TSMPace = 100;
 
                 $.ajax({
-                    url: '/Home/SaveSubList',
+                    url: '/home/SaveSubList',
                     data: _data,
                     type: 'POST',
                     success: function (re) {
@@ -193,7 +193,21 @@
                     }
                 });
             },
-
+           //分页
+            pageInitA: function (opt, cb) {
+                var self = this;
+                $('.J-Pagination').pagination({
+                    listStyle: 'pagination',
+                    prevText: '<i class="fa fa-angle-left"></i>',
+                    nextText: '<i class="fa fa-angle-right"></i>',
+                    itemsOnPage: opt.pageSize || 10,
+                    items: opt.counts,
+                    currentPage: opt.pageIndex,
+                    onPageClick: function (page, event) {
+                        list.vm.getData(page);
+                    }
+                });
+            },
             // 排序搜索
             getOrderData: function(tabId, param){// tabId: 1、vuelist排序 2、其他列表排序（默认1）
                 var self = this;
@@ -211,7 +225,7 @@
             },
 
             // 获取其他tab内列表
-            getOtherPage: function(tabId){// tabId：2、未分配任务 3、缺陷 4、线上BUG
+            getOtherPage: function(tabId){// tabId：2、接受分配任务  3、线上BUG
                 var self = this;
                 if(self.canSearch == 0) return;
 
@@ -221,7 +235,7 @@
                 self.canSearch = 0;
 
                 $.ajax({
-                    url: '/Home/GetHomeOtherPage?reqType=' + tabId,
+                    url: '/home/GetHomeOtherPage?reqType=' + tabId,
                     data: $form.serialize(),
                     type: 'POST',
                     dataType: 'json',
@@ -273,14 +287,17 @@
         }
     };
 
+
+
     var list = new vueList({
         vueId: '#myTask',
-        vueUrl: '/Home/MyTask',
+        vueUrl: '/home/MyTask',
         vuePageSize: 10,
         needlocalData: 1,
         vueMixins: [home],
         vueCallback: function (re,_self) {
-            console.log(re)
+            // home.methods.pageInitA(re);
+            console.log(re);
         },
     });
 })();

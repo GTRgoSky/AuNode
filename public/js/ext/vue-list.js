@@ -83,7 +83,8 @@ function vueList(params) {
     var obj_data = __dataFormat.toObj(decodeURIComponent(searchData), '&', '=');
     var data = $.extend({}, option.data,{
         searchData: obj_data,
-        canSearch: 1 // 是否查询标识位
+        canSearch: 1 ,// 是否查询标识位
+        page :1 
     });
 
     this.vm = new Vue({
@@ -124,7 +125,7 @@ function vueList(params) {
                         self.$set('listdata', re);
                         option.vueCallback(re,self);
                         commonMethods.progressBar.removeProgressBar();
-
+                        self.pageInit(re.tab1)
                         setTimeout(function(){
                             commonMethods.tooltip();
                         }, 200);
@@ -135,15 +136,16 @@ function vueList(params) {
             //分页
             pageInit: function (opt ,cb) {
                 var self = this;
-                opt.el.pagination({
+                $('.J-Pagination').pagination({
                     listStyle: 'pagination',
                     prevText: '<i class="fa fa-angle-left"></i>',
                     nextText: '<i class="fa fa-angle-right"></i>',
-                    itemsOnPage: opt.size || 10,
-                    items: opt.count,
-                    currentPage: opt.index,
+                    itemsOnPage: opt.pageSize || 10,
+                    items: opt.counts,
+                    currentPage: opt.pageIndex,
                     onPageClick: function(page, event){
-                        cb(page, event);
+                        self.getData(page, event);
+                        self.canSearch =1;
                     }
                 });
             },

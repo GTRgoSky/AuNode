@@ -41,7 +41,8 @@ router.get('/Edit', function(req, res, next) {
                 res.write(err);
                 return res.end();
             }
-            if(reason.UserRoot !=1 || reason.UserRoot !=2){
+            //如果权限不为1(超级管理员)和2(PM)
+            if(reason.UserRoot !=1 && reason.UserRoot !=2){
                 res.redirect("/Task/List?msg=err");
                 return res.end();
             }
@@ -235,7 +236,9 @@ router.get('/detail', function(req, res, next) {
 
     var _obj = {$data: {},"UserName":req.session.UserName,$son:{}};
     var TMId = req.query.id;
-
+    if(!req.session.UserName){
+        res.redirect('/LoginPage');
+    }
     if(TMId){
         taskModel.findOne({TMId: TMId}, function(err, re){
             if(err) {
@@ -275,11 +278,20 @@ router.get('/detail', function(req, res, next) {
 });
 
 router.post('/detail/adUser',function(req,res){
-    console.log(req.body)
     req.body.TMId = req.query.Tmid;
 
     detailModel.create(req.body,function(err,re){
         res.send(re)
+    }); 
+})
+
+router.post('/detail/changeUser',function(req,res){
+    req.body.TMId = req.query.Tmid;
+
+    detailModel.findOneAndUpdate({'TMTitle': req.query.title},req.body,function(err,re){
+        console.log(re);
+         res.redirect('/Task/detail?id='+req.query.id+'');
+          res.end();
     }); 
 })
 

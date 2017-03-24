@@ -1,0 +1,98 @@
+<% block('plug').append('jstree,select2,fullcalendar') %>
+<% block('title').append('人力视图页面') %>
+<% block('PageJS').append('<script src="/Static/js/human-resource.js"></script>') %>
+<% block('PageCSS').append('<link href="/Static/css/human-resource.css" rel="stylesheet">') %>
+
+<script>
+    console.log(<%- JSON.stringify(groupList) -%>);
+</script>
+
+<%
+    var userList = '';
+    var userTree = '<ul>' + setGroupList(groupList) + '</ul>';
+    function setGroupList(item){
+
+        var str = '';
+        for(var i = 0; i < item.length; i++){
+
+            var liStr = ''; 
+            
+            if(item[i].Groups){
+                var isSelf = item[i].id == commonInfo.JobNumber;
+                liStr = '<li class="J-Member J-Leader jstree-leader' + (isSelf ? ' J-My' : '') + '" data-jobid="' + item[i].id + '" data-teamid="' + item[i].departid + '" data-jstree=' + "'" + '{"type":"leader"}' + "'" + '><span' + (isSelf ? ' class="text-danger"' : '') + '>' + item[i].name + '</span></li>' + setGroupList(item[i].Groups);
+                userList += '<option value="' + item[i].name + '">' + item[i].name + '</option>';
+            }else if(item[i].members){
+                for(var j = 0; j < item[i].members.length; j++){
+                    var isSelf = item[i].members[j].id == commonInfo.JobNumber;
+                    var isLeader = item[i].members[j].id == item[i].id;
+                    liStr += '<li class="J-Member' + (isLeader ? ' J-Leader jstree-leader' : '') + (item[i].members[j].id == commonInfo.JobNumber ? ' J-My' : '') + (isSelf ? (isLeader ? ' text-danger' : ' text-navy') : '') +
+                    '" data-jobid="' + item[i].members[j].id +
+                    '" data-teamid="' + item[i].departid +
+                    '" data-jstree=' + "'" + '{"type":"' + (isLeader ? 'leader' : 'user') + '"}' + "'" + '>' +
+                    '<span>' + item[i].members[j].name + '</span></li>';
+                    userList += '<option value="' + item[i].members[j].name + '">' + item[i].members[j].name + '</option>';
+                }
+            }
+            str += '<li class="J-Team' + (item[i].departid ? '' : ' J-LargeTeam') + '" data-jstree=' + "'" + '{"type":"users"}' + "'" + ' data-teamid="' + (item[i].departid || '') + '">' +
+                '<span>' + item[i].departname + '</span>' + 
+                '<ul>' + liStr + '</ul>' +
+            '</li>';
+        }
+        return str;
+    }
+%>
+
+<div class="wrapper J-App" style="display:none;">
+    <!--  组织架构列表  -->
+    <div class="animated fadeInRight user-list J-UserBox"><!--v-show="teamList" style="display: none;"-->
+        <div class="ibox">
+            <div class="ibox-content">
+                <div class="input-group input-group-sm pull-right">
+                    <select class="form-control J-Select2Request" data-select="{url:/base/GetUserList}"></select>
+                    <span class="input-group-btn">
+                        <a href="javascript:;" class="btn btn-warning margin-0 J-SetSelf">看自己</a>
+                    </span>
+                </div>
+                <div class="clearfix"></div>
+                <br />
+                <div class="J-SideMenu"><%- userTree -%></div>
+            </div>
+        </div>
+    </div>
+
+    <!--  人力视图列表  -->
+    <div class="animated fadeInRight cal-box J-CalBox human-list">
+        <div class="J-ProgressBarParent">
+            <div class="J-ProgressBarShowEle opacity-0">
+            <%- humanResourceList -%>
+            </div>
+        </div>
+    </div>
+    
+    <div class="clearfix"></div>
+
+    <!--  个人详细任务日历图  -->
+    <template class="J-PersonalCal">
+        <div class="ibox">
+            <div class="ibox-title">
+                <a href="javascript:;" class="col-xs-4 J-TitleCal" style="white-space: nowrap;"></a>
+                <div class="col-xs-7 col-xs-offset-1">
+                    <div class="btn-group btn-group-justified">
+                        <div class="btn-group btn-group-sm">
+                            <button type="button" class="btn btn-default">未开始</button>
+                        </div>
+                        <div class="btn-group  btn-group-sm">
+                            <button type="button" class="btn btn-success">进行中</button>
+                        </div>
+                        <div class="btn-group  btn-group-sm">
+                            <button type="button" class="btn btn-info">已完成</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div id="personCal"></div>
+            </div>
+        </div>
+    </template>
+</div>

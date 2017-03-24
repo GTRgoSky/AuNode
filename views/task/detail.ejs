@@ -84,9 +84,6 @@
             </div>
 
                 </form>
-                <!--<div class="well">
-                {{$data |json}}
-            </div>-->
             </div>
             <br/>
             <div class="ibox-title">
@@ -159,27 +156,33 @@ setTimeout(function(){
                     content: $('.J-EditBox'),
                     zIndex: 10,
                     cancel: function(index){
-                        // 关闭;
-                        // item = obj_item;
-                        // console.log(213)
+
                     }
                 }); 
                 $('.J-EditBox').removeClass('hide')
             })
-            // $('.J-del').click(function(){
-
-            // })
         },
         methods:{
             saveTmUser:function(){
                 $.ajax({
-                url: '/Task/detail/adUser?Tmid=<%- $data.TMId -%>',
-                data: $('.AdUserTm').serialize(),
-                type: 'post',
-                success: function (re) {
-                    console.log(re);
-                    location.reload();
-                }
+                    url: '/Task/detail/adUser?Tmid=<%- $data.TMId -%>',
+                    data: $('.AdUserTm').serialize(),
+                    type: 'post',
+                    success: function (re) {
+                        console.log(re);
+                        location.reload();
+                    }
+                });
+            },
+            upDateTmUser:function(){
+                $.ajax({
+                    url: '/Task/detail/changeUser?Tmid=<%- $data.TMId -%>',
+                    data: $('.UpUserTm').serialize(),
+                    type: 'post',
+                    success: function (re) {
+                        console.log(re);
+                        location.reload();
+                    }
                 });
             }
         }

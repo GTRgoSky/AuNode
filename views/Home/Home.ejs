@@ -11,12 +11,10 @@
                     <div class="tabs-top">
                         <div class="ulbox">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab-1">已分配任务</a></li>
+                                <li class="active"><a data-toggle="tab" class="J-tab1" href="#tab-1">分配的任务</a></li>
+                                <li class=""><a data-toggle="tab" class="J-tab2"  href="#tab-2" v-on:click="">进行的任务</a></li>
                                 <li>
-                                    <a href="#tab-3" data-toggle="tab" v-on:click="getOtherPage(3, 2);">关于你的缺陷</a>
-                                </li>
-                                <li>
-                                    <a href="#tab-4" data-toggle="tab" v-on:click="getOtherPage(4, 3);">关于你的BUG</a>
+                                    <a href="#tab-3" data-toggle="tab" class="J-tab3" v-on:click="">关于你的BUG</a>
                                 </li>
                             </ul>
                         </div>
@@ -25,86 +23,6 @@
                         <div id="tab-1" class="tab-pane active J-Pane J-ProgressBarParent">
                             <div class="panel-body J-ProgressBarShowEle">
                                 <div >
-                                    <form id="SearchForm" class="form-horizontal">
-                                        <input type="hidden" name="orderItem"/>
-                                        <input type="hidden" name="orderType"/>
-                                        <div class="col-sm-6 col-lg-4">
-                                            <div class="form-group form-group-sm">
-                                                <label class="col-md-3 control-label">分配人</label>
-                                                <div class="col-md-9">
-                                                    <div class="input-group">
-                                                        <select class="form-control" name="CreatorNum"></select>
-                                                        <span class="input-group-btn">
-                                                            <a class="btn btn-primary btn-sm margin-0 J-Select2MySelf">只看自己</a>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-lg-4">
-                                            <div class="form-group form-group-sm">
-                                                <label class="col-md-3 control-label">经办人</label>
-                                                <div class="col-md-9">
-                                                    <div class="input-group">
-                                                        <select class="form-control" name="OperatorNum" ></select>
-                                                        <span class="input-group-btn">
-                                                            <a class="btn btn-primary btn-sm margin-0 J-Select2MySelf">只看自己</a>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-lg-4">
-                                            <div class="form-group form-group-sm">
-                                                <label class="col-md-3 control-label">是否延期</label>
-                                                <div class="col-md-9">
-                                                    <select class="form-control input-sm" name="IsLate">
-                                                        <option value="">--请选择--</option>
-                                                        <option value="1">已延期</option>
-                                                        <option value="2">未延期</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-lg-4">
-                                            <div class="form-group form-group-sm">
-                                                <label class="col-md-3 control-label">是否排期</label>
-                                                <div class="col-md-9">
-                                                    <select class="form-control input-sm" name="IsArranged">
-                                                        <option value="">--请选择--</option>
-                                                        <option value="1">已排期</option>
-                                                        <option value="2">未排期</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-lg-4">
-                                            <div class="form-group form-group-sm">
-                                                <label class="col-md-3 control-label">优先级</label>
-                                                <div class="col-md-9">
-                                                    <select class="form-control input-sm" name="Rank">
-                                                        <option value="">--请选择--</option>
-                                                        <option value="1">高</option>
-                                                        <option value="2">中</option>
-                                                        <option value="3">低</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-lg-4">
-                                            <div class="form-group form-group-sm">
-                                                <label class="col-md-3 control-label">是否完成</label>
-                                                <div class="col-md-9">
-                                                    <select class="form-control input-sm" name="IsTest">
-                                                        <option value="">--请选择--</option>
-                                                        <option value="1">未完成</option>
-                                                        <option value="2">已完成</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </form>
                                     <hr />
                                     <div class="table-responsive">
                                         <table class="table table-hover">
@@ -115,7 +33,6 @@
                                                     </th>
                                                     
                                                     <th nowrap>主任务名</th>
-                                                    <th nowrap>经办人</th>
                                                     <th nowrap>
                                                         <a href="javascript:;" v-on:click="getOrderData(1, 'TMRank')" title="按照优先级排序">优先级 <i class="fa fa-arrows-v"></i></a>
                                                     </th>
@@ -128,14 +45,13 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                    <tr v-for="item in listdata.items">
+                                                    <tr v-for="item in listdata.tab1.items">
                                                         <template v-if='item.TMIsValid==1'>
                                                             <td nowrap style="width:50px;">{{item.TMId}}</td>
                                                             
                                                             <td nowrap class="title-txt">
                                                                 <a href="/Task/Edit?id={{item.TMId}}" target="_blank" title="{{item.TMTitle}}">{{item.TMTitle}}</a>
                                                             </td>
-                                                            <td nowrap >{{item.TMDoUser}}</td>
                                                             <td nowrap>
                                                                 <span class="label label_{{item.TMRank}}">{{item.TMRank}}</span>
                                                             </td>
@@ -150,11 +66,107 @@
                                     </div>
                                     <hr />
                                     <div class="row">
-                                        <div class="col-md-5 col-sm-12">总计{{ listdata.counts || 0 }}条，每页显示{{ listdata.pageSize || 10 }}条</div>
-                                        <div class="col-md-7 col-sm-12 text-right" id="Pagination" v-show="listdata.counts > listdata.pageSize"></div>
+                                        <div class="col-md-5 col-sm-12">总计{{ listdata.tab1.counts || 0 }}条，每页显示{{ listdata.tab1.pageSize || 10 }}条</div>
+                                        <div class="col-md-7 col-sm-12 text-right J-Pagination" id="Pagination" v-show="listdata.tab1.counts > listdata.tab1.pageSize"></div>
                                     </div>
                                 </div>
-                                <h1 class="text-center" style="height: 400px; line-height:400px;" v-show="!listdata.counts">暂无已分配任务哦！<h1>
+                                <h1 class="text-center" style="height: 400px; line-height:400px;" v-show="!listdata.tab1.counts">暂无已分配任务哦！<h1>
+                            </div>
+                        </div>
+                        <div id="tab-2" class="tab-pane  J-Pane J-ProgressBarParent">
+                            <div class="panel-body J-ProgressBarShowEle">
+                                <div >
+                                    <hr />
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th nowrap>
+                                                        <a href="javascript:;" v-on:click="getOrderData(1, 'TSMMissionId')" title="按照编号排序">编号 <i class="fa fa-arrows-v"></i></a>
+                                                    </th>
+                                                    
+                                                    <th nowrap>主任务名</th>
+                                                    <th nowrap>
+                                                        <a href="javascript:;" v-on:click="getOrderData(1, 'TMRank')" title="按照优先级排序">优先级 <i class="fa fa-arrows-v"></i></a>
+                                                    </th>
+                                                    <th nowrap>
+                                                        <a href="javascript:;" v-on:click="getOrderData(1, 'TSMFlag')" title="按照状态排序">状态 <i class="fa fa-arrows-v"></i></a>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr v-for="item2 in listdata.tab2">
+                                                        <template v-if='item2.TMIsValid==1'>
+                                                            <td nowrap style="width:50px;">{{item2.TMId}}</td>
+                                                            
+                                                            <td nowrap class="title-txt">
+                                                                <a href="/Task/detail?id={{item2.TMId}}" target="_blank" title="{{item2.TMTitle}}">{{item2.TMTitle}}</a>
+                                                            </td>
+                                                            <td nowrap>
+                                                                <span class="label label_{{item2.TMRank}}">{{item2.TMRank}}</span>
+                                                            </td>
+                                                            <td nowrap>
+                                                                {{item2.TMIsFinish}}
+                                                            </td>
+                                                        </template>
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-md-5 col-sm-12">总计{{ listdata.tab2.length }}条，每页显示{{ listdata.tab2.length }}条</div>
+                                    </div>
+                                </div>
+                                <h1 class="text-center" style="height: 400px; line-height:400px;" v-show="listdata.tab2.length == 0">暂无已分配任务哦！<h1>
+                            </div>
+                        </div>
+                         <div id="tab-3" class="tab-pane J-Pane J-ProgressBarParent">
+                            <div class="panel-body J-ProgressBarShowEle">
+                                <div >
+                                    <hr />
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th nowrap>
+                                                        <a href="javascript:;" v-on:click="getOrderData(1, 'TSMMissionId')" title="按照编号排序">编号 <i class="fa fa-arrows-v"></i></a>
+                                                    </th>
+                                                    
+                                                    <th nowrap>主任务名</th>
+                                                    <th nowrap>
+                                                        <a href="javascript:;" v-on:click="getOrderData(1, 'TMRank')" title="按照优先级排序">Bug等级<i class="fa fa-arrows-v"></i></a>
+                                                    </th>
+                                                    <th nowrap>
+                                                        <a href="javascript:;" v-on:click="getOrderData(1, 'TSMFlag')" title="按照状态排序">状态 <i class="fa fa-arrows-v"></i></a>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr v-for="item3 in listdata.tab3">
+                                                        <template v-if='item3.BugIsValid==1'>
+                                                            <td nowrap style="width:50px;">{{item3.Bugid}}</td>
+                                                            
+                                                            <td nowrap class="title-txt">
+                                                                <a href="/Task/bug?id={{item3.Bugid}}" target="_blank" title="{{item3.BugName}}">{{item3.BugName}}</a>
+                                                            </td>
+                                                            <td nowrap>
+                                                                <span class="label label_{{item3.BugType}}">{{item3.BugType}}</span>
+                                                            </td>
+                                                            <td nowrap>
+                                                                {{item3.BugFinish == 1 ? '已完成' : (item3.BugFinish ==2 ? '进行中' : '已完成')}}
+                                                            </td>
+                                                        </template>
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-md-5 col-sm-12">总计{{listdata.tab3.length}}条，每页显示{{ listdata.tab3.length }}条</div>
+                                    </div>
+                                </div>
+                                <h1 class="text-center" style="height: 400px; line-height:400px;" v-show="listdata.tab3.length ==0">暂无已分配任务哦！<h1>
                             </div>
                         </div>
                     </div>

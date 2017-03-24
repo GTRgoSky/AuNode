@@ -1,0 +1,68 @@
+<!--插件-->
+<% block('plug').append('select2') %>
+<!--页面引用样式-->
+<% block('PageCSS').append('<style>\
+/* 重写icheck */\
+.radio-inline{\
+    min-width:130px;\
+}\
+.checkbox-inline{\
+    margin-bottom: 5px!important;\
+    min-width:190px;\
+}\
+.radio-inline, .checkbox-inline{\
+    padding-top: 0!important;\
+}\
+</style>') %>
+
+
+<div class="ibox J-Edit">
+    <div class="ibox-title">
+        <h5><i class="fa fa-edit"></i> 任务编辑页</h5>
+    </div>
+    <div class="ibox-content">
+        <form action="/Task/Edit" class="form-horizontal" method="post">
+            <div class="form-group">
+                <label class="col-lg-3 text-right"><span>任务名称</span> <span class="red">*</span></label>
+                <div class="col-lg-6">
+                    <input type="text" name="TMTitle" class="form-control" value="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 text-right"><span>责任人</span> <span class="red">*</span></label>
+                <div class="col-lg-6">
+                    <input type="text" name="DetailUser" class="form-control" value="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 text-right"><span>缺陷描述</span> <span class="red">*</span></label>
+                <div class="col-lg-6">
+                    <textarea name="TMDescription" class="form-control" rows="5"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-6 col-lg-offset-3">
+
+                    <button type="submit" class="btn btn-primary"  disabled><i class="fa fa-save"></i> 保存</button>
+                </div>
+            </div>
+        </form>
+          <!--<div class="well">
+        {{$data |json}}
+    </div>-->
+    </div>
+</div>
+
+
+<script>
+setTimeout(function(){
+    new Vue({
+        el:".J-Edit",
+        
+    })
+    
+},200)
+
+
+</script>
