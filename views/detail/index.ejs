@@ -1,7 +1,7 @@
 <!--插件-->
 <% block('plug').append('select2') %>
-<!--页面引用样式-->
-<% block('PageCSS').append('<style>\
+    <!--页面引用样式-->
+    <% block('PageCSS').append('<style>\
 /* 重写icheck */\
 .radio-inline{\
     min-width:130px;\
@@ -16,53 +16,61 @@
 </style>') %>
 
 
-<div class="ibox J-Edit">
-    <div class="ibox-title">
-        <h5><i class="fa fa-edit"></i> 任务编辑页</h5>
-    </div>
-    <div class="ibox-content">
-        <form action="/Task/Edit" class="form-horizontal" method="post">
-            <div class="form-group">
-                <label class="col-lg-3 text-right"><span>任务名称</span> <span class="red">*</span></label>
-                <div class="col-lg-6">
-                    <input type="text" name="TMTitle" class="form-control" value="">
+        <div class="ibox J-Edit">
+            <div class="ibox-title">
+                <h5><i class="fa fa-edit"></i> 任务编辑页</h5>
+                <a href="/detail/info"  class="btn btn-xs btn-primary pull-right"><i class="fa fa-plus"></i> 新增</a>
+            </div>
+            <div class="ibox-content">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th nowrap>
+                                    <a href="javascript:;" v-on:click="getOrderData(1, 'TSMMissionId')" title="按照编号排序">编号 <i class="fa fa-arrows-v"></i></a>
+                                </th>
+                                <th nowrap>主任务名</th>
+                                <th nowrap>
+                                    <a href="javascript:;" v-on:click="getOrderData(1, 'TMRank')" title="按照优先级排序">Bug等级<i class="fa fa-arrows-v"></i></a>
+                                </th>
+                                <th nowrap>
+                                    <a href="javascript:;" v-on:click="getOrderData(1, 'TSMFlag')" title="按照状态排序">状态 <i class="fa fa-arrows-v"></i></a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="item3 in listdata">
+                                <td nowrap style="width:50px;">{{item3.Bugid}}</td>
+
+                                <td nowrap class="title-txt">
+                                    <a href="/detail/info?id={{item3.Bugid}}" target="_blank" title="{{item3.BugName}}">{{item3.BugName}}</a>
+                                </td>
+                                <td nowrap>
+                                    <span class="label label_{{item3.BugType}}">{{item3.BugType}}</span>
+                                </td>
+                                <td nowrap>
+                                    {{item3.BugFinish == 1 ? '已完成' : (item3.BugFinish ==2 ? '进行中' : '已完成')}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="well">
+                    {{$data |json}}
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-lg-3 text-right"><span>责任人</span> <span class="red">*</span></label>
-                <div class="col-lg-6">
-                    <input type="text" name="DetailUser" class="form-control" value="">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-lg-3 text-right"><span>缺陷描述</span> <span class="red">*</span></label>
-                <div class="col-lg-6">
-                    <textarea name="TMDescription" class="form-control" rows="5"></textarea>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-lg-6 col-lg-offset-3">
-
-                    <button type="submit" class="btn btn-primary"  disabled><i class="fa fa-save"></i> 保存</button>
-                </div>
-            </div>
-        </form>
-          <!--<div class="well">
-        {{$data |json}}
-    </div>-->
-    </div>
-</div>
+        </div>
 
 
-<script>
-setTimeout(function(){
-    new Vue({
-        el:".J-Edit",
-        
-    })
-    
-},200)
-
-
-</script>
+        <script src="/lib/vue/1.0.16/vue.min.js"></script>
+        <script>
+            new Vue({
+                el: ".J-Edit",
+                data: {
+                    listdata: JSON.parse('<%- bugList%>')
+                },
+                ready: function () {
+                    console.log(this.listdata)
+                }
+            })
+        </script>

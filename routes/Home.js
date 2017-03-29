@@ -136,10 +136,24 @@ router.get('/FlowChart', function(req, res, next) {
 });
 
 /* 关于极光--版本推进 */
+router.get('/Echart', function(req, res, next) {
+    res.setHeader('content-type', 'text/html; charset=utf-8');
+    if(!req.session.UserId){
+        res.redirect('/LoginPage');
+    }
+    res.render('home/Echart', {UserName: req.session.UserName}, function(err, data){
+        if (err)  return res.req.next(err);
+
+        res.write(data);
+        res.end();
+    });
+});
+
+/* 关于极光--版本推进 */
 router.get('/History', function(req, res, next) {
     res.setHeader('content-type', 'text/html; charset=utf-8');
     
-    res.render('Home/history', {UserName: ''}, function(err, data){
+    res.render('home/history', {UserName: ''}, function(err, data){
         if (err)  return res.req.next(err);
 
         res.write(data);

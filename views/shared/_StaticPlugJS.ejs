@@ -1,7 +1,7 @@
 <% for(var i = 0; i < plug.length; i++){ %>
 
     <% if(plug[i] == 'vue'){ %>
-        <script src="/lib/vue/1.0.8/vue.min.js"></script>
+        <script src="/lib/vue/1.0.16/vue.min.js"></script>
     <% } else if(plug[i] == 'vuedev'){ %>
         <script src="/lib/vue/vue.js"></script>
     <% } else if(plug[i] == 'select2'){ %>
@@ -49,5 +49,7 @@
         <script src="/lib/iCheck/icheck.min.js"></script>
     <% } else if(plug[i] == 'jstree'){ %>
         <script src="/lib/jsTree/jstree.min.js"></script>
+    <% } else if(plug[i] == 'echart'){ %>
+        <script src="/lib/echart/echart.min.js"></script>
     <% } %>
 <% } %>

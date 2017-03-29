@@ -23,4 +23,7 @@ module.exports = {
     //Bug有效
     BugIsValid:{type:Number,default:1},
 
+    //Bug原因
+    BugCont:{type:String}
+
 };

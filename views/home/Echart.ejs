@@ -1,0 +1,102 @@
+<script src="/lib/echart/echart.min.js"></script>
+<div id="main" style="height:400px" ></div>
+<div>
+    <select id="User">
+        <option value="1">root</option>
+        <option value="2">321</option>
+        <option value="3">这是第一个用户</option>
+    </select>
+</div>
+<script>
+    $("#User").change(function(re){
+        if(re.target.value ==1){
+            var obj =[0,0,0,0,0,1,3,3,4,5,4,3,2,5,4,2,5,2,2,2,2,2,2,2,2,2,2,2,2,1];
+            echart(obj);
+        }else if(re.target.value ==2){
+            var obj =[1,1,0,1,0,1,2,2,1,1,3,2,1,4,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,1];
+            echart(obj);
+        }else{
+            var obj =[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
+            echart(obj);
+        }
+    })
+    function echart(obj) {
+        var self = this;
+        var myChart = echarts.init(document.getElementById('main'));
+        var option = {
+            textStyle: {
+                color: 'black'
+            },
+            title: {
+                text: '',
+                // right: '10%',
+                // top: '-20px',
+                subtext: '单位（个）'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['执行任务数']
+            },
+            xAxis: [{
+                type: 'category',
+                boundaryGap: false,
+                data: ["05月01日", "05月02日", "05月05日", "05月04日", "05月05日", "05月06日", "05月07日", "05月08日", ,
+                    "05月10日", "05月11日", "05月12日", "05月13日", "05月14日", "05月15日", "05月16日", "05月17日",
+                    "05月18日", "05月19日", "05月20日", "05月21日", "05月22日", "05月23日", "05月24日", "05月25日",
+                    "05月26日", "05月27日", "05月28日", "05月29日", "05月30日", "05月31日"
+                ],
+            }],
+            yAxis: [{
+                type: 'value',
+                scale: true,
+            }],
+            series: [{
+                name: "执行任务数",
+                type: 'line',
+                data: obj,
+                markPoint: {
+                    data: [{
+                            type: 'max',
+                            name: '最大值'
+                        },
+                        {
+                            type: 'min',
+                            name: '最小值'
+                        }
+                    ],
+                    itemStyle: {
+                        normal: {
+                            color: '#2EC7C9'
+                        }
+                    }
+                },
+                markLine: {
+                    data: [{
+                        type: 'average',
+                        name: '平均值'
+                    }],
+                    itemStyle: {
+                        normal: {
+                            color: '#2EC7C9'
+                        }
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: '#2EC7C9',
+                        lineStyle: {
+                            color: '#2EC7C9'
+                        }
+                    }
+                }
+            }]
+        };
+        myChart.setOption(option);
+        $(window).resize(myChart.resize);
+
+    }
+    echart([0,0,0,0,0,1,3,3,4,5,4,3,2,5,4,2,5,2,2,2,2,2,2,2,2,2,2,2,2,1]);
+    
+</script>

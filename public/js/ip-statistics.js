@@ -19,7 +19,7 @@
             }, function () {
                 console.log(1234);
                 $.ajax({
-                    url: '/Home/UpdateIp?flag=' + ipFlag + '&ip=' + commonInfo.ip + '&name=' + commonInfo.UserName + '&num=' + commonInfo.JobNumber,
+                    url: '/home/UpdateIp?flag=' + ipFlag + '&ip=' + commonInfo.ip + '&name=' + commonInfo.UserName + '&num=' + commonInfo.JobNumber,
                     success: function (re) {
                         commonMethods.toastr.request(re, function(){
                             setTimeout(function(){

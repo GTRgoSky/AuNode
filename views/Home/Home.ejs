@@ -1,9 +1,8 @@
 <!--插件-->
-<% block('plug').append('list') %>
+<% block('plug').append('list,echart') %>
 
 
 <div class="wrapper" id="myTask" >
-
     <div class="col-md-12">
         <div class="ibox">
             <div class="ibox-content">
@@ -174,7 +173,7 @@
             </div>
         </div>
     </div>
-        <div class="well">
+    <div class="well">
         <pre>{{ $data | json }}</pre>
     </div>
 </div>

@@ -1,11 +1,11 @@
 <!--插件-->
 <% block('plug').append('vuedev,list,datetimepicker,select2') %>
 
-<!--页面引用脚本-->
-<% block('PageJS').append('<script src="/Static/js/onlinebug-list.js"></script>') %>
+    <!--页面引用脚本-->
+    <% block('PageJS').append('<script src="/Static/js/onlinebug-list.js"></script>') %>
 
-<!--页面引用样式-->
-<% block('PageCSS').append('<style>\
+        <!--页面引用样式-->
+        <% block('PageCSS').append('<style>\
 .pub-style{\
     width: 100%;\
     text-align: center;\
@@ -19,60 +19,92 @@ width:12px;\
 }\
 </style>') %>
 
-<!--title-->
-<% block('title').append('线上BUG列表页') %>
+            <!--title-->
+            <% block('title').append('线上BUG列表页') %>
 
 
-<div class="wrapper" id="listApp" style="display:none;" v-show="$data">
-    <div class="ibox">
-        <div class="ibox-title">
-            <h5><i class="fa fa-search"></i> 查询</h5>
-        </div>
-        <div class="ibox-content p-xs">
-            <form class="form-horizontal" id="SearchForm">
-                <div class="row">
-                    <div class="col-sm-6 col-lg-4">
-                        <div class="form-group form-group-sm">
-                            <label for="" class="col-md-4 control-label">名称</label>
-                            <div class="col-md-8">
-                                <input type="text" name="TOBTitle" class="form-control input-sm" placeholder="请输入名称" />
+                <div class="ibox J-Edit">
+                    <div class="ibox-title">
+                        <h5><i class="fa fa-edit"></i> Bug详情页</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <form  class="form-horizontal" id="BugForm">
+                        <input type="hidden" name="Bugid" value="{{listdata.Bugid}}">
+                            <div class="form-group">
+                                <label class="col-lg-3 text-right"><span>任务名称</span> <span class="red">*</span></label>
+                                <div class="col-lg-6">
+                                    <input type="text" name="BugName" class="form-control" value="{{listdata.BugName}}" v-model="listdata.BugName">
+                                </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 text-right"><span>创建人</span> <span class="red">*</span></label>
+                                <div class="col-lg-6">
+                                    <input type="text" name="BugCreat" class="form-control" disabled value="{{listdata.BugCreat}}" v-model="listdata.BugCreat">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 text-right"><span>责任人</span> <span class="red">*</span></label>
+                                <div class="col-lg-6">
+                                    <input type="text" name="BugUse" class="form-control" value="{{listdata.BugUse}}" v-model="listdata.BugUse">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 text-right"><span>缺陷等级</span> <span class="red">*</span></label>
+                                <div class="col-lg-6">
+                                    <input type="text" name="BugType" class="form-control" value="{{listdata.BugType}}" v-model="listdata.BugType">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 text-right"><span>缺陷状态</span> <span class="red">*</span></label>
+                                <div class="col-lg-6">
+                                    <input type="text" name="BugFinish" class="form-control" value="{{listdata.BugFinish}}" v-model="listdata.BugFinish">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 text-right"><span>缺陷描述</span> <span class="red">*</span></label>
+                                <div class="col-lg-6">
+                                    <textarea name="BugCont" class="form-control" rows="5" v-model="listdata.BugCont"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-6 col-lg-offset-3">
+                                    <div v-on:click="sub()"  class="btn btn-primary" v-if="aa =='root' || aa =='321'"><i class="fa fa-save"></i>保存</div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="well">
+                            {{$data |json}}
                         </div>
                     </div>
-                    <div class="col-sm-6 col-lg-4">
-                        <div class="form-group form-group-sm">
-                            <label for="" class="col-md-4 control-label">责任人</label>
-                            <div class="col-md-8">
-                                <select class="form-control" name="TOBOperatorNum" v-select2_request="{url:/Base/GetUserList}"></select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-4">
-                        <div class="form-group form-group-sm">
-                            <label for="" class="col-md-4 control-label">类型</label>
-                            <div class="col-md-8">
-                                <%- partial('shared/comp/select-option', {data: {obj: onlinebugMap.TOBFlag, name: 'TOBFlag'}}) %>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-4">
-                        <div class="form-group form-group-sm">
-                            <label for="" class="col-md-4 control-label">优先级</label>
-                            <div class="col-md-8">
-                                <%- partial('shared/comp/select-option', {data: {obj: onlinebugMap.TOBRank, name: 'TOBRank'}}) %>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
-                    <search-btn class-name="col-sm-6 col-lg-4" :clear-search="true" export-url="<%- connectHost %>/Bug/AllSingleBugExport"></search-btn>
                 </div>
 
-            </form>
-        </div>
-    </div>
-    <%- include list-table-vue %>
-    <div class="well J-VueJson" style="display:none;" v-show="$data">
-        <h2>以下内容仅供调试使用，正式环境请删除</h2>
-        <pre>{{ $data | json }}</pre>
-    </div>
-</div>
+                <script src="/lib/vue/1.0.16/vue.min.js"></script>
+                <script>
+                    new Vue({
+                        el: ".J-Edit",
+                        data: {
+                            listdata: JSON.parse('<%- bugList%>'),
+                            aa:"<%= UserName%>"
+                        },
+                        ready: function () {
+                            console.log(this.listdata)
+                        },
+                        methods:{
+                            sub:function(){
+                                var self = this ;
+                                $.ajax({
+                                    url:"/detail/creat",
+                                    data:$("#BugForm").serialize(),
+                                    type:"POST",
+                                    success:function(res){
+                                        console.log(res)
+                                        toastr.success(res)
+                                    },
+                                    error:function(err){
+                                        console.log(err)
+                                    }
+                                })
+                            }
+                        }
+                    })
+                </script>
