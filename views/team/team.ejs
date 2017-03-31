@@ -1,0 +1,110 @@
+<script src="/lib/echart/echart.min.js"></script>
+<div id="main" style="height:400px"></div>
+<div>
+    <select id="User">
+        <option value="1">root</option>
+        <option value="2">321</option>
+        <option value="3">这是第一个用户</option>
+    </select>
+</div>
+<script>
+    $("#User").change(function (re) {
+        if (re.target.value == 1) {
+            var bugNum = [0,0,1,1,3,4,4,4,4,3,2,1],
+            allNum =[2,3,4,5,5,3,4,4,4,3,3,2];
+            echart(bugNum,allNum);
+        } else if (re.target.value == 2) {
+            var bugNum = [0,0,0,1,2,2,2,2,1,1,2,1],
+            allNum =[2,4,5,4,3,4,3,4,4,3,2,2];
+            echart(bugNum,allNum);
+        } else {
+            var bugNum = [0,0,1,1,3,2,2,3,2,1,1,1],
+            allNum =[3,3,2,1,2,2,1,2,2,3,4,1];
+            echart(bugNum,allNum);
+        }
+    })
+
+    function echart(bugNum,allNum) {
+        var self = this;
+        var myChart = echarts.init(document.getElementById('main'));
+        var option = {
+            title: {
+                text: '组内年度数据统计',
+                subtext: '数据为测试数据'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['Bug率', '总任务数量']
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    mark: {
+                        show: true
+                    },
+                    dataView: {
+                        show: true,
+                        readOnly: false
+                    },
+                    magicType: {
+                        show: true,
+                        type: ['line', 'bar']
+                    },
+                    restore: {
+                        show: true
+                    },
+                    saveAsImage: {
+                        show: true
+                    }
+                }
+            },
+            calculable: true,
+            xAxis: [{
+                type: 'category',
+                data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+            }],
+            yAxis: [{
+                type: 'value'
+            }],
+            series: [{
+                    name: 'Bug率',
+                    type: 'bar',
+                    data: bugNum,
+                    markPoint: {
+                        data: [{
+                                type: 'max',
+                                name: '最大值'
+                            },
+                            {
+                                type: 'min',
+                                name: '最小值'
+                            }
+                        ]
+                    },
+                    markLine: {
+                        data: [{
+                            type: 'average',
+                            name: '平均值'
+                        }]
+                    }
+                },
+                {
+                    name: '总任务数量',
+                    type: 'bar',
+                    data: allNum,
+                    markLine: {
+                        data: [{
+                            type: 'average',
+                            name: '平均值'
+                        }]
+                    }
+                }
+            ]
+        };
+        myChart.setOption(option);
+        $(window).resize(myChart.resize);
+    }
+     echart([0,0,1,1,3,4,4,4,4,3,2,1],[2,3,4,5,5,3,4,4,4,3,3,2]);
+</script>

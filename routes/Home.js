@@ -123,11 +123,23 @@ router.post('/MyTask',function(req, res, next){
 
 
 
-
+//人力视图
 router.get('/FlowChart', function(req, res, next) {
     res.setHeader('content-type', 'text/html; charset=utf-8');
     
     res.render('home/flow-chart', {type: req.query.type || 0,UserName: ''}, function(err, data){
+        if (err)  return res.req.next(err);
+
+        res.write(data);
+        res.end();
+    });
+});
+
+//组内对比
+router.get('/TeamChart', function(req, res, next) {
+    res.setHeader('content-type', 'text/html; charset=utf-8');
+    
+    res.render('team/team', {type: req.query.type || 0,UserName: ''}, function(err, data){
         if (err)  return res.req.next(err);
 
         res.write(data);

@@ -60,7 +60,7 @@ router.get('/info', function (req, res, next) {
         } else {
             res.render('detail/list', {
                 "UserName": req.session.UserName,
-                "bugList": JSON.stringify({}),
+                "bugList": JSON.stringify({BugCreat : req.session.UserName}),
             })
         }
     } else {
@@ -87,15 +87,38 @@ router.post('/creat', function (req, res, next) {
             }
         }).exec(function (err, re) {
             //re这个是拿到更新过后的数据
-            console.log(re)
-            if(err){
+            if (err) {
                 res.send(err)
-            }else{
+            } else {
                 res.send("更新成功！")
             }
-            
+
         })
     } else {
+        var addBug = new Promise(function (resolve, reject) {
+            taskCounter.findByIdAndUpdate({
+                _id: 'BugId'
+            }, {
+                $inc: {
+                    seq: 1
+                }
+            }, function (err, res) {
+                resolve(res);
+            })
+        })
+        addBug.then(function (re) {
+            // 设置任务ID
+            req.body.BugIsValid = 1;
+            req.body.Bugid=re.seq;
+            req.body.BugCreat = req.session.UserName;
+            return Bug.create(req.body);
+        }).then(function (re) {
+            res.send("新增成功！")
+            res.end();
+        }).catch(function (err) {
+            res.write(err);
+            res.end();
+        });
 
     }
 
